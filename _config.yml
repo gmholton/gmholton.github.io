@@ -83,11 +83,11 @@ author:
   name             : "Gary"
   avatar           : "profile.png"
   bio              : "Professor of Lingusitics"
-  location         : "University of Hawai‘i at Mānoa"
-  employer         : "UHM"
+  location         : "Moore Hall 563"
+  employer         : "University of Hawai‘i at Mānoa"
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : #"http://yourfullgooglescholarurl.com"
-  email            : holton [at] hawaii.edu
+  email            : "holton@hawaii.edu"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
