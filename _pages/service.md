@@ -8,7 +8,6 @@ redirect_from:
 
 {% include base_path %}
 
-# Outreach and Service
 
 ## Language Conservation
 
