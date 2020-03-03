@@ -44,13 +44,13 @@ University of Alaska Fairbanks
 * Catalogue of Endangered Languages (http://endangeredlanguages.com)
 * Collection Management Tools for Linguistics (http://rebrand.ly/meacom-linguistics)
 
-## Publications
+## Selected Publications
 
   <ul>{% for post in site.publications %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
 
-## Presentations
+## Selected Presentations
 
   <ul>{% for post in site.talks %}
     {% include archive-single-talk-cv.html %}
