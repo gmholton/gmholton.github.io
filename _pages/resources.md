@@ -29,11 +29,11 @@ redirect_from:
 
 ### Data Science
 
-* [Data Science Training](http://training.arcticdata.io/materials/arctic-data-center-training/)
-	* [GitHub cheatsheet](docs/github-git-cheat-sheet.pdf)
-	* [Data-Wrangling cheatsheet](docs/data-wrangling-cheatsheet.pdf)
-	* [ggplot cheatsheet](docs/ggplot2-cheatsheet.pdf)
-  $ [Minimal Miskates](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)
+* [ADC Data Science Training](http://training.arcticdata.io/materials/arctic-data-center-training/)
+* [GitHub cheatsheet](docs/github-git-cheat-sheet.pdf)
+* [Data-Wrangling cheatsheet](docs/data-wrangling-cheatsheet.pdf)
+* [ggplot cheatsheet](docs/ggplot2-cheatsheet.pdf)
+* [Minimal Miskates](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)
 
 
 ### Upcoming Conferences and Workshops
