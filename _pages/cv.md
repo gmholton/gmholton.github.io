@@ -45,8 +45,9 @@ University of Alaska Fairbanks
 * Collection Management Tools for Linguistics (http://rebrand.ly/meacom-linguistics)
 
 ## Selected Publications
-
-  {% assign recent_pubs = (site.publications | where_exp: 'date', 'date > site.time - 5' | sort: 'date') %}
+  {% assign cur_year = {{ site_time| date: '%y' }}  %}
+  <p>Current year is {{ cur_year }}</p>
+  {% assign recent_pubs = (site.publications | where_exp: 'date', 'date > {{cur_year}} - 3' | sort: 'date') %}
   <!-- {{ site.time | date: '%y' }} -->
   <ul>{% for post in recent_pubs %}
     {% include archive-single-cv.html %}

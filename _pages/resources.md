@@ -33,6 +33,7 @@ redirect_from:
 	* [GitHub cheatsheet](docs/github-git-cheat-sheet.pdf)
 	* [Data-Wrangling cheatsheet](docs/data-wrangling-cheatsheet.pdf)
 	* [ggplot cheatsheet](docs/ggplot2-cheatsheet.pdf)
+  $ [Minimal Miskates](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)
 
 
 ### Upcoming Conferences and Workshops
