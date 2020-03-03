@@ -39,9 +39,7 @@
     {% endif %}
 
         {% if post.collection == 'teaching' %}
-          <p> {{ post.term }} {% if post.crn %} (CRN: {{ post.crn }}) {% endif %} </p>
-          <p> {{ post.time }} {% if post.location %} , {{ post.location }} {% endif %} </p>
-          
+          <p> {{ post.type }}, <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif post.collection == 'publications' %}
           <p><i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif post.date %}
