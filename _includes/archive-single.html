@@ -48,7 +48,7 @@
         {% endif %}
 
     {% if post.collection == 'teaching' and post.description %}
-    <p class="archive__item-excerpt" itemprop="description"> {{ post.description }} [< a href="{{ base_path }}{{ post.url }} rel-"permalink">more</a>]</p> {% endif %}
+    <p class="archive__item-excerpt" itemprop="description"> {{ post.description }} [< a href="{{ base_path }}{{ post.url }} rel-"permalink">more</a>]</p>
 
     {% elsif post.excerpt and site.read_more != 'enabled' %}
     <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>
@@ -57,11 +57,11 @@
     {% endif %}
 
     {% if post.citation and post.paperurl %}
-      <blockquote>{{ post.citation }} <a href="{{ post.paperurl }}"><u>{{ post.paperurl }}</u></a></blockquote>
+      <p>{{ post.citation }} <a href="{{ post.paperurl }}"><u>{{ post.paperurl }}</u></a></p>
     {% elsif post.citation %}
-      <blockquote>{{ post.citation }} </blockquote>
+      <p>{{ post.citation }} </p>
     {% elsif post.paperurl %}
-      <blockquote>Download: <a href=" {{ post.paperurl }} "><u>{{ post.paperurl }}</u></a></blockquote>
+      <p>Download: <a href=" {{ post.paperurl }} "><u>{{ post.paperurl }}</u></a></p>
     {% endif %}
 
   </article>
