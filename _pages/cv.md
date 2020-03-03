@@ -46,7 +46,9 @@ University of Alaska Fairbanks
 
 ## Selected Publications
 
-  <ul>{% for post in site.publications %}
+  {% assign recent_pubs = (site.publications | where_exp: 'date', 'date > site.time - 5' | sort: 'date') %}
+  <!-- {{ site.time | date: '%y' }} -->
+  <ul>{% for post in recent_pubs %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
 
