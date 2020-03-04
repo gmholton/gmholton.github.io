@@ -15,6 +15,19 @@ author_profile: true
 
 {% endif %}
 
-{% for post in site.talks reversed %}
+
+
+{% assign upcoming_talks = site.talks | where_exp: "talks","talks.date > site.time" %}
+{% assign past_talks = site.talks | where_exp: "talks","talks.date <= site.time" %}
+
+<h2>Upcoming</h2>
+
+{% for post in upcoming_talks reversed %}
+  {% include archive-single-talk.html %}
+{% endfor %}
+
+<h2>Past</h2>
+
+{% for post in past_talks reversed %}
   {% include archive-single-talk.html %}
 {% endfor %}
