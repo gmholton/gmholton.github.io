@@ -3,10 +3,19 @@ layout: archive
 title: "Teaching"
 permalink: /teaching/
 author_profile: true
+header:
+  overlay_image: fishtrap.jpg
+  overlay_filter: 0.3
 ---
 
 {% include base_path %}
 
+{% assign this_term = "" %}
+
 {% for post in site.teaching reversed %}
+  {% if post.term != this_term %}
+  {% assign this_term = post.term %}
+    <h1>{{ this_term }}</h1>
+  {% endif %}
   {% include archive-single.html %}
 {% endfor %}

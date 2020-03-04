@@ -34,7 +34,7 @@ layout: default
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time></p>
         {% endif %}
 
-        {% if post.collection == 'teaching' %}
+        {% if page.collection == 'teaching' %}
           <p> {{ post.term }} {% if post.crn %} (CRN: {{ post.crn }}) {% endif %} </p>
           <p> {{ post.time }} {% if post.location %} , {{ post.location }} {% endif %}</p>
 
@@ -46,7 +46,7 @@ layout: default
 
 
         {% if page.citation and page.paperurl %}
-          <p>{{ page.citation }} <a href="{{ page.paperurl }}"><u>{{ page.paperurl }}</u></a></p>
+          <p>{{ page.citation }} <a href="{{ page.paperurl }}">{{ page.paperurl }}</a></p>
         {% elsif page.citation %}
           <p>{{ page.citation }} </p>
         {% elsif post.paperurl %}
@@ -70,7 +70,7 @@ layout: default
 
       {% if page.share %}{% include social-share.html %}{% endif %}
 
-      {% include post_pagination.html %}
+      {%if page.collection == 'posts' %}{% include post_pagination.html %}{% endif %}
     </div>
 
     {% if site.comments.provider and page.comments %}

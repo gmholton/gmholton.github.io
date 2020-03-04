@@ -39,8 +39,8 @@
     {% endif %}
 
         {% if post.collection == 'teaching' %}
-          <p> {{ post.term }} {% if post.crn %} (CRN: {{ post.crn }}) {% endif %} </p>
-          <p> {{ post.time }} {% if post.location %} , {{ post.location }} {% endif %}</p>
+          <p> {{ post.term }} {% if post.crn %} (CRN: {{ post.crn }}) {% endif %} <br>
+           {{ post.time }} {% if post.location %} , {{ post.location }} {% endif %}</p>
         {% elsif post.collection == 'publications' %}
           <p><i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif post.date %}
@@ -48,20 +48,21 @@
         {% endif %}
 
     {% if post.collection == 'teaching' and post.description %}
-    <p class="archive__item-excerpt" itemprop="description"> {{ post.description }} [< a href="{{ base_path }}{{ post.url }}" rel="permalink"> more </a>]</p>
+    <p class="archive__item-excerpt" itemprop="description"> {{ post.description }}</p>
+    <p> [<a href="{{ base_path }}{{ post.url }}" rel="permalink">more info</a>]</p>
 
     {% elsif post.excerpt and site.read_more != 'enabled' %}
     <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>
     {% elsif post.excerpt and site.read_more == 'enabled' %}
-    <p class="archive__item-excerpt" itemprop="description"><p>{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> more</a></strong></p></p>
+    <p class="archive__item-excerpt" itemprop="description"><p>{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink">more</a></strong></p></p>
     {% endif %}
 
     {% if post.citation and post.paperurl %}
-      <p>{{ post.citation }} <a href="{{ post.paperurl }}"><u>{{ post.paperurl }}</u></a></p>
+      <p>{{ post.citation }} <a href="{{ post.paperurl }}">{{ post.paperurl }}</a></p>
     {% elsif post.citation %}
       <p>{{ post.citation }} </p>
     {% elsif post.paperurl %}
-      <p>Download: <a href=" {{ post.paperurl }} "><u>{{ post.paperurl }}</u></a></p>
+      <p>Download: <a href=" {{ post.paperurl }} ">{{ post.paperurl }}</a></p>
     {% endif %}
 
   </article>

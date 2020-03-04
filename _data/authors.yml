@@ -1,13 +1,13 @@
 # Authors
 
-Name Name:
-  name        : "Name Name"
-  uri         : "http://name.com"
-  email       : "name@name.com"
-  bio         : "This is the first name."
-  avatar      : "bio-photo-2.jpg"
-  twitter     : "name"
-  google_plus : "Name"
+Gary Holton:
+  name        : "Gary Holton"
+  uri         : "http://www2.hawaii.edu/~holton"
+  email       : "holton@hawaii.edu"
+  bio         : #""
+  avatar      : "profile.png"
+  twitter     : #"name"
+  google_plus : #"Name"
 
 Name2 Name2:
   name        : "Name2 Name2"
