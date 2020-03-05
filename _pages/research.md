@@ -34,6 +34,7 @@ The MEaCoM project (2017-2020) convenes a series of workshop bringing together k
 
 
 <hr>
+<div class="page__footer-copyright">
 <img src="/images/NSFlogoTrans.png" alt="NSF" width="79" height="79" align="left" style="margin-right:15px;">This material is based upon work supported by the National Science Foundation under grants BCS-0936887,OPP-1003160,  OPP-1624365, and   BCS-1648984.
 
-Any opinions, findings and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+Any opinions, findings and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.</div>

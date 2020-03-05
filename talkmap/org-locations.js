@@ -20,13 +20,18 @@ var addressPoints = [
     -90.0701156
   ],
   [
+    "Bangkok, Thailand",
+    13.7542529,
+    100.493087
+  ],
+  [
     "Leipzig, Germany",
     51.3406321,
     12.3747329
   ],
   [
-    "Bangkok, Thailand",
-    13.7542529,
-    100.493087
+    "Oslo, Norway",
+    59.9133301,
+    10.7389701
   ]
 ];

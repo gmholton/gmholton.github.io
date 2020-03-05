@@ -15,19 +15,23 @@ author_profile: true
 
 {% endif %}
 
-
-
 {% assign upcoming_talks = site.talks | where_exp: "talks","talks.date > site.time" %}
-{% assign past_talks = site.talks | where_exp: "talks","talks.date <= site.time" %}
+{% assign past_talks = site.talks | where_exp: "talks","talks.date <= site.time"  %}
 
-<h2>Upcoming</h2>
+
 
 {% for post in upcoming_talks reversed %}
+  {% if forloop.first %} <h2>Upcoming Talks</h2> {% endif %}
   {% include archive-single-talk.html %}
 {% endfor %}
 
-<h2>Past</h2>
-
+<!-- only display talks within last `recent_talks` year -->
+{% assign oldestyear = site.time | date: "%Y" | minus: site.recent_talks %}
 {% for post in past_talks reversed %}
-  {% include archive-single-talk.html %}
+  {% if forloop.first %} <h2>Recent Talks</h2> {% endif %}
+  {% assign postyear = post.date | date: "%Y" | plus:0 %}
+  {%if postyear >= oldestyear %}
+    {% include archive-single-talk.html %}
+  {% endif %}
+
 {% endfor %}

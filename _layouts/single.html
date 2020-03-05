@@ -34,13 +34,20 @@ layout: default
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time></p>
         {% endif %}
 
-        {% if page.collection == 'teaching' %}
-          <p> {{ post.term }} {% if post.crn %} (CRN: {{ post.crn }}) {% endif %} </p>
-          <p> {{ post.time }} {% if post.location %} , {{ post.location }} {% endif %}</p>
+        <p>page collection: {{ page.collection }} </p>
+        <p>page venue: {{ page.venue }}</p>
 
-        {% elsif page.venue and page.date %}
-          <p><i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
-        {% elsif page.date %}
+        {% if page.collection == 'teaching' %}
+          <p> {{ page.term }} {% if page.crn %} (CRN: {{ page.crn }}) {% endif %} <br>
+           {{ page.time }} {% if page.location %} | {{ page.location }} {% endif %}</p>
+
+        {% elsif page.collection == 'talks' %}
+          {% if page.venue and page.date %}
+            <p><i>{{ page.venue }}</i>, <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
+          {% elsif page.date %}
+            <p><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
+          {% endif %}
+        {% elsif page.date and page.collection != 'publications' %}
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
         {% endif %}
 

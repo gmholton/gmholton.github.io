@@ -10,9 +10,9 @@
 
 # ## Data format
 #
-# The TSV needs to have the following columns: pub_date, title, venue, excerpt, citation, site_url, and paper_url, with a header at the top.
+# The TSV needs to have the following columns: pub_date, title, venue, description, citation, site_url, and paper_url, image, with a header at the top.
 #
-# - `excerpt` and `paper_url` can be blank, but the others must have values.
+# - `description` and `paper_url` can be blank, but the others must have values.
 # - `pub_date` must be formatted as YYYY-MM-DD.
 # - `url_slug` will be the descriptive part of the .md file and the permalink URL for the page about the paper. The .md file will be `YYYY-MM-DD-[url_slug].md` and the permalink will be `https://[yourdomain]/publications/YYYY-MM-DD-[url_slug]`
 
@@ -76,8 +76,8 @@ for row, item in publications.iterrows():
 
     md += """\npermalink: /publication/""" + item.url_slug # html_filename
 
-    if len(str(item.excerpt)) > 5:
-        md += "\nexcerpt: '" + html_escape(item.excerpt) + "'"
+    if len(str(item.description)) > 5:
+        md += "\ndescription: '" + html_escape(item.description) + "'"
 
     md += "\ndate: " + str(item.pub_date)
 
@@ -92,11 +92,14 @@ for row, item in publications.iterrows():
 
     ## Markdown description for individual page
 
-    if len(str(item.excerpt)) > 5:
-        md += "\n" + html_escape(item.excerpt) + "\n"
+    if len(str(item.description)) > 5:
+        md += "\n\n"
+        if len(str(item.image)) > 0:
+            md = md + '<img src="/images/' + str(item.image) + '" align="left" style="margin-right: 15px;">'
+        md +=  html_escape(item.description) + "\n"
 
-    if len(str(item.paper_url)) > 5:
-        md += "\n\n[<a href='" + item.paper_url + "'>download</a>]\n"
+#    if len(str(item.paper_url)) > 5:
+#        md += "\n\n[<a href='" + item.paper_url + "'>download</a>]\n"
 
     # md += "\nRecommended citation: " + item.citation
 
