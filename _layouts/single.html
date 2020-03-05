@@ -34,8 +34,6 @@ layout: default
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time></p>
         {% endif %}
 
-        <p>page collection: {{ page.collection }} </p>
-        <p>page venue: {{ page.venue }}</p>
 
         {% if page.collection == 'teaching' %}
           <p> {{ page.term }} {% if page.crn %} (CRN: {{ page.crn }}) {% endif %} <br>
@@ -47,7 +45,7 @@ layout: default
           {% elsif page.date %}
             <p><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
           {% endif %}
-        {% elsif page.date and page.collection != 'publications' %}
+        {% elsif page.date and page.collection != 'publications' and page.collection != 'research' %}
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
         {% endif %}
 

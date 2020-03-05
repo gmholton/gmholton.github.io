@@ -4,7 +4,8 @@ layout: single
 permalink: /research/
 author_profile: true
 redirect_from:
-  - /research.html
+  - research/
+  - research.html
 
 header:
   overlay_image: pantar_recording.png
