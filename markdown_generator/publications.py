@@ -76,9 +76,6 @@ for row, item in publications.iterrows():
 
     md += """\npermalink: /publication/""" + item.url_slug # html_filename
 
-    if len(str(item.description)) > 5:
-        md += "\ndescription: '" + html_escape(item.description) + "'"
-
     md += "\ndate: " + str(item.pub_date)
 
     md += "\nvenue: '" + html_escape(item.venue) + "'"

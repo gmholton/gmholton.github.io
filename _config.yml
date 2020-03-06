@@ -83,9 +83,9 @@ analytics:
 author:
   name             : ""
   avatar           : "profile.png"
-  bio              : "Professor of Lingusitics"
+  bio              : # "Professor of Lingusitics"
   location         : "Moore Hall 563"
-  employer         : "<a href='http://ling.hawaii.edu'>University of Hawai‘i</a>"
+  employer         : # "<a href='http://ling.hawaii.edu'>University of Hawai‘i</a>"
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : #"http://yourfullgooglescholarurl.com"
   email            : "holton@hawaii.edu"

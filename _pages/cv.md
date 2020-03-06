@@ -9,6 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
+View complete CV in [GoogleDocs](https://docs.google.com/document/d/1xg36UEb2sq5BGEAq5fau0RkwcISa4764ZiTxpKDbt1Q/edit?usp=sharing).
 
 ## Current Appointments
 
@@ -58,9 +59,15 @@ University of Alaska Fairbanks
 
 ## Teaching
 
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
+* IS 750: Topics  in Biocultural Diversity
+* LING 630: Field Methods
+* LING 640G: Language, Landscape, and Space
+* LING 680: Introduction to Language Documentation
+* LING 720: Linguistic Typology
+* LING 750G: Lexicography
+* LING 750G: Grammar Writing
+* LING 770: Areal Linguistics 
+
 
 ## Service
 
