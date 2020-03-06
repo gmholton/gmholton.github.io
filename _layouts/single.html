@@ -51,11 +51,11 @@ layout: default
 
 
         {% if page.citation and page.paperurl %}
-          <p>{{ page.citation }} <a href="{{ page.paperurl }}">{{ page.paperurl }}</a></p>
+          <p class="archive__item-excerpt" itemprop="description"><strong>Citation:</strong> {{ page.citation }} <a href="{{ page.paperurl }}">{{ page.paperurl }}</a></p>
         {% elsif page.citation %}
-          <p>{{ page.citation }} </p>
-        {% elsif post.paperurl %}
-          <p>Download: <a href=" {{ post.paperurl }} "><u>{{ post.paperurl }}</u></a></p>
+          <p class="archive__item-excerpt" itemprop="description"><strong>Citation:</strong> {{ page.citation }} </p>
+        {% elsif page.paperurl %}
+          <p class="archive__item-excerpt" itemprop="description"><strong>Download:</strong> <a href=" {{ page.paperurl }} ">{{ page.paperurl }}</a></p>
         {% endif %}
 
         </header>

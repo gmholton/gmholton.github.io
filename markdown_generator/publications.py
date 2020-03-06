@@ -91,7 +91,7 @@ for row, item in publications.iterrows():
 
     if len(str(item.description)) > 5:
         md += "\n\n"
-        if len(str(item.image)) > 0:
+        if len(str(item.image)) > 5:
             md = md + '<img src="/images/' + str(item.image) + '" align="left" style="margin-right: 15px;">'
         md +=  html_escape(item.description) + "\n"
 
