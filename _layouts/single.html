@@ -40,8 +40,8 @@ layout: default
            {{ page.time }} {% if page.location %} | {{ page.location }} {% endif %}</p>
 
         {% elsif page.collection == 'talks' %}
-          {% if page.venue and page.date %}
-            <p><i>{{ page.venue }}</i>, <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
+          {% if page.conference and page.date %}
+            <p><i>{{ page.conference }}</i><br><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
           {% elsif page.date %}
             <p><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
           {% endif %}

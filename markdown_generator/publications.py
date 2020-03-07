@@ -95,6 +95,10 @@ for row, item in publications.iterrows():
             md = md + '<img src="/images/' + str(item.image) + '" align="left" style="margin-right: 15px;">'
         md +=  html_escape(item.description) + "\n"
 
+
+    if len(str(item.pub_file)) > 3:
+        md += "\n\n[Download](/files/" + item.pub_file + ")\n"
+
 #    if len(str(item.paper_url)) > 5:
 #        md += "\n\n[<a href='" + item.paper_url + "'>download</a>]\n"
 

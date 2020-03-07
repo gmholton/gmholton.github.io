@@ -104,11 +104,17 @@ for row, item in talks.iterrows():
 
     ## markdown for individual page
 
+    if len(str(item.author)) > 3:   # used when there are co-authors
+        md += "\n" + item.author + "\n\n"
+
     if len(str(item.description)) > 3:
         md += "\n" + html_escape(item.description) + "\n"
 
     if len(str(item.talk_url)) > 3:
         md += "\n\n" + item.talk_url + "\n"
+
+    if len(str(item.talk_file)) > 3:
+        md += "\n\n[download presentation](/files/" + item.talk_file + ")\n"
 
 
 

@@ -25,12 +25,13 @@ geopy.geocoders.options.default_ssl_context = ctx
 g = glob.glob("*.md")
 
 
-geocoder = Nominatim()
+geocoder = Nominatim(user_agent="talkmap")
 location_dict = {}
 location = ""
 permalink = ""
 title = ""
 
+print(g)
 
 for file in g:
     with open(file, 'r') as f:

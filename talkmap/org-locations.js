@@ -33,5 +33,10 @@ var addressPoints = [
     "Oslo, Norway",
     59.9133301,
     10.7389701
+  ],
+  [
+    "Leiden, Netherlands",
+    52.1598645,
+    4.4824271
   ]
 ];
