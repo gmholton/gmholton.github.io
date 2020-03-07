@@ -3,7 +3,7 @@ title: "Catalogue of Endangered Languages"
 collection: projects
 permalink: /research/elcat
 project_url: http://endangeredlanguages.com
-date: 2012-01-01
+date: 2016-01-01
 status: active
 ---
 
