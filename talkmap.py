@@ -44,7 +44,7 @@ for file in g:
 
 
         location_dict[location] = geocoder.geocode(location)
-        print(location, "\n", location_dict[location])
+        print(location, "\n", (location_dict[location].latitude, location_dict[location].longitude))
 
 
 m = getorg.orgmap.create_map_obj()
