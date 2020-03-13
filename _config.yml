@@ -5,6 +5,9 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # `jekyll serve`. If you change this file, please restart the server process.
 
+# University settings
+office_hours             : "Tues 9:30-11:30 am, Wed 1:00-2:00 pm"
+
 # Site Settings
 locale                   : "en-US"
 title                    : "Gary Holton"
