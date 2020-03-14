@@ -39,11 +39,11 @@ University of Alaska Fairbanks
 
 ## Current Projects
 
-* Alaska Native Place Names Project (http://akplacenames.org)
-* Eyak Grammar, Dictionary and Texts (http://eyak.org)
-* Kaipumakani Digital Heritage Project (http://kaipumakani.org)
-* Catalogue of Endangered Languages (http://endangeredlanguages.com)
-* Collection Management Tools for Linguistics (http://rebrand.ly/meacom-linguistics)
+* Alaska Native Place Names Project \[[akplacenames.org](http://akplacenames.org)\]
+* Eyak Grammar, Dictionary and Texts \[[eyak.org](http://eyak.org)\]
+* Kaipumakani Digital Heritage Project \[[kaipumakani.org](http://kaipumakani.org)\]
+* Catalogue of Endangered Languages \[[endangeredlanguages.com](http://endangeredlanguages.com)\]
+* Collection Management Tools for Linguistics \[[meacom-linguistics](http://rebrand.ly/meacom-linguistics)\]
 
 ## Selected Publications
 
@@ -66,7 +66,7 @@ University of Alaska Fairbanks
 * LING 720: Linguistic Typology
 * LING 750G: Lexicography
 * LING 750G: Grammar Writing
-* LING 770: Areal Linguistics 
+* LING 770: Areal Linguistics
 
 
 ## Service
