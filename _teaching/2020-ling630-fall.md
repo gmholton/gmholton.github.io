@@ -73,7 +73,7 @@ This course will go where the language takes us, so there is no set schedule. Ho
 
 ### Small group sessions
 
-* Small groups of students will meet with Ms. Gravelle for approximately 1 hour per week via Zoom.
+* Small groups of students will meet with Ms. Gravelle for approximately 1 hour per week via Zoom .
 * Students need to work with the language consultant to work out times that fit her schedule.
 * Each session needs to be audio and video recorded. It is the responsibility of the students to make sure that the audio and video recorders are available and ready for use in each session. If there is an issue with the equipment, make sure to notify everyone in the class.
 
@@ -85,3 +85,6 @@ However, for pedagogical purposes in this class we have explicitly chosen to ski
 
 ## Disabilities services
 Any student who feels they may need an accommodation based on the impact of a disability is invited to contact me privately. I would be happy to work with you and the KOKUA Program (Office for Students with Disabilities) to ensure reasonable accommodations in my course. You can also contact KOKUA at (808) 956-7511 or (808) 956-7612 (voice/text) in room 013 of the Queen Lili‘uokalani Center for Student Services.
+
+Need internet access off campus? Here's a list of free [wifi hotspots](https://www.wifimap.io/2988-honolulu-free-wifi/map).
+
