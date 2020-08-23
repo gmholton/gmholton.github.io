@@ -5,7 +5,7 @@ permalink: /teaching/2020-ling630-fall
 date: 2020-08-01
 term: "Fall 2020"
 crn: 79286
-time: "Wednesdays 3-6 pm"
+time: "Wednesdays 4:30-6:00 pm <span style='color:red;'>(note revised start time</span>"
 location: "online and video conference"
 description: "This course will equip graduate students to carry out linguistic fieldwork, building on previous documentation and description where available."
 status: "active"
