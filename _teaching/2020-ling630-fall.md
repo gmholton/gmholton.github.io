@@ -5,7 +5,7 @@ permalink: /teaching/2020-ling630-fall
 date: 2020-08-01
 term: "Fall 2020"
 crn: 79286
-time: "Wednesdays 4:30-6:00 pm <span style='color:red;'>(note revised start time</span>"
+time: "Wednesdays 4:30-6:00 pm <span style='color:red;'>(note revised start time)</span>"
 location: "online and video conference"
 description: "This course will equip graduate students to carry out linguistic fieldwork, building on previous documentation and description where available."
 status: "active"
@@ -18,7 +18,7 @@ status: "active"
 
 ## Overview
 
-This course is primarily designed to equip graduate students to carry out linguistic fieldwork, building on previous documentation and description where available. It is the first part of a two semester course in which students acquire training in the skills and tools of linguistic fieldwork, language documentation and language description by working with a speaker of a language previously unknown to them to produce a documentation and description of aspects of the language. We will take a holistic and ethnographic approach and simultaneously create and annotate a corpus of language in use, build a lexical database, and produce a grammatical sketch. Students will learn techniques of data collection, elicitation, management, and analysis by doing language documentation.
+This course equips graduate students to carry out linguistic fieldwork, building on previous documentation and description where available. It is the first part of a two semester course in which students acquire training in the skills and tools of linguistic fieldwork, language documentation and language description by working with a speaker of a language previously unknown to them to produce a documentation and description of aspects of the language. We will take a holistic and ethnographic approach and simultaneously create and annotate a corpus of language in use, build a lexical database, and produce a grammatical sketch. Students will learn techniques of data collection, elicitation, management, and analysis by doing language documentation.
 
 ## Course objectives and learning outcomes
 
