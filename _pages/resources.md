@@ -17,6 +17,7 @@ redirect_from:
 * [Catalogue of Endangered Languages](http://endangeredlanguages.com)
 * [Glottolog](http://glottolog.org)
 * [Reasons you should use video in language documentation](https://www.superlinguo.com/post/148949834781/reasons-you-should-use-video-in-language)
+* Run Fieldworks on a [virtual machine](https://mcdonn.github.io/2020-710/2020-710-syllabus/2020-710-syllabus.html#instructions_for_downloading_flex_on_virtual_machine) (thanks to [Brad McDonnell](http://www.bradleymcdonnell.org/))
 
 
 ### Publications
@@ -36,7 +37,3 @@ redirect_from:
 * [Minimal Miskates](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)
 
 
-### Upcoming Conferences and Workshops
-
-* [SEALS 2020](https://sites.google.com/a/hawaii.edu/seaconfs/seals-2020)
-* [CoLang 2020](http://hs.umt.edu/colang/)
