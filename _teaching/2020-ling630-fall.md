@@ -88,3 +88,4 @@ Any student who feels they may need an accommodation based on the impact of a di
 
 Need internet access off campus? Here's a list of free [wifi hotspots](https://www.wifimap.io/2988-honolulu-free-wifi/map).
 
+Access full syllabus [here](https://docs.google.com/document/d/1z98gF1ap8aE3JDvRl9A_klpan4mhtSjtemZfhdn0iDY/edit?usp=sharing).
