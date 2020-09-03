@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # University settings
-office_hours             : "Wednesdays 8-10 AM"
+office_hours             : "Wednesdays 8-10 AM, 1-2 PM"
 
 # Site Settings
 locale                   : "en-US"
