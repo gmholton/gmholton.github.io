@@ -19,6 +19,11 @@ redirect_from:
 * [Reasons you should use video in language documentation](https://www.superlinguo.com/post/148949834781/reasons-you-should-use-video-in-language)
 * Run Fieldworks on a [virtual machine](https://mcdonn.github.io/2020-710/2020-710-syllabus/2020-710-syllabus.html#instructions_for_downloading_flex_on_virtual_machine) (thanks to [Brad McDonnell](http://www.bradleymcdonnell.org/))
 
+### Archiving
+* [Archiving for the Future](https://archivingforthefuture.teachable.com/), online archiving course
+* [Video data in language documentation and language archiving](http://hdl.handle.net/10125/24965) (Seyfeddinipur & Rau, 2020)
+* [DELAMAN](https://www.delaman.org/delaman-award/) Archiving Award
+* [laMeta](http://lameta.org) Metadata and Collection Management Tool 
 
 ### Publications
 
