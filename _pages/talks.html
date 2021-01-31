@@ -15,8 +15,10 @@ author_profile: true
 
 {% endif %}
 
-{% assign upcoming_talks = site.talks | where_exp: "talks","talks.date > site.time" %}
-{% assign past_talks = site.talks | where_exp: "talks","talks.date <= site.time"  %}
+{% assign active_talks = site.talks | where:"status",!"cancelled" %}
+
+{% assign upcoming_talks = active_talks | where_exp: "talks","talks.date > site.time" %}
+{% assign past_talks = active_talks | where_exp: "talks","talks.date <= site.time"  %}
 
 
 
