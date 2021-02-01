@@ -21,8 +21,8 @@ var addressPoints = [
   ],
   [
     "Bangkok, Thailand",
-    13.7542529,
-    100.493087
+    13.7544238,
+    100.4930399
   ],
   [
     "Leipzig, Germany",
@@ -36,7 +36,7 @@ var addressPoints = [
   ],
   [
     "Leiden, Netherlands",
-    52.1598645,
-    4.4824271
+    52.1518157,
+    4.4811088666204295
   ]
 ];
