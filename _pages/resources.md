@@ -28,6 +28,7 @@ redirect_from:
 ### Publications
 
 * [Pacific Linguistics Publications Archive](http://sealang.net/archives/pl/)
+* [SIL-PNG Language and Culture Archive](https://pnglanguages.sil.org/resources)
 
 
 
