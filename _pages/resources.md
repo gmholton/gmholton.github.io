@@ -12,7 +12,7 @@ redirect_from:
 
 * [Generic Style Rules for Linguistics](http://www.elpublishing.org/docs/public/generic-style-rules-linguistics.pdf) (pdf)
 * [Language Documentation Software](http://www.rnld.org/software)
-* [MPI Field Manuals and Stimulus Materials](http://fieldmanuals.mpi.nl/" target="_blank)
+* [MPI Field Manuals and Stimulus Materials](http://fieldmanuals.mpi.nl/)
 * [World Atlas of Linguistic Structures](http://wals.info)
 * [Catalogue of Endangered Languages](http://endangeredlanguages.com)
 * [Glottolog](http://glottolog.org)
