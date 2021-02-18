@@ -8,7 +8,7 @@ crn: 79286
 time: "Wednesdays 4:30-6:00 pm <span style='color:red;'>(note revised start time)</span>"
 location: "online and video conference"
 description: "This course will equip graduate students to carry out linguistic fieldwork, building on previous documentation and description where available."
-status: "active"
+status: "archived"
 ---
 
 ## Instructor

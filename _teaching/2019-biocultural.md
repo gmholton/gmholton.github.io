@@ -8,7 +8,7 @@ crn:
 time: "Wednesdays 3-6 pm"
 location: "Moore 575"
 description: "This is a seminar course which introduces students to the field of biocultural diversity and conservation, emphasizing transdisciplinary approaches to understanding the interrelationships between culture, ecology, and language. This course features lectures and discussions by key UH Mānoa faculty in anthropology, biology, botany, Hawaiian studies, natural resources, linguistics, literature, law, and more."
-status: "active"
+status: "inactive"
 ---
 
 ## Instructors

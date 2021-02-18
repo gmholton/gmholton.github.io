@@ -1,16 +1,15 @@
 ---
 title: "LING 640G: Language, Landscape and Space"
 collection: teaching
-permalink: /teaching/2017-space
-date: 2017-09-01
-term: "Fall 2017"
+permalink: /teaching/2021-space
+date: 2021-09-01
+term: "Fall 2021"
 crn:
-time: "Wednesdays 3-6 pm"
-location: "Moore 224"
+time: "Thursday 2:45-5:15 pm HST"
+location: "virtual"
 description: "This course provides an introduction to the study of the complex inter-relationships between language, landscape, and space."
-status: "archived"
+status: "active"
 ---
-Next offered: Fall 2020
 
 ## Overview
 
@@ -30,9 +29,7 @@ At the end of this course students will be able to:
 
 ## Materials
 
-* Levinson, Stephen C. 2003. Space in Language and Cognition: Explorations in cognitive diversity. Cambridge. ISBN 9780521011969	(also available at Sinclair Library course reserves)
-* Course Readings, as assigned (available at https://rebrand.ly/ling640G-readings);
-file naming convention: lastname-year-descriptive_title.pdf. Also slides.
+* Course Readings, as assigned (available on [GoogleDrive](https://rebrand.ly/ling640G-readings));
+file naming convention: lastname-year-descriptive_title.pdf. 
 
-
-For more information see the complete [syllabus](https://docs.google.com/document/d/1SKk4GUaOQbZgnWYD0Z_OzbRlijvmmeRVp__1JZGPmCU/edit?usp=sharing).
+For more information see the complete [syllabus](https://bit.ly/ling640fall2021).
