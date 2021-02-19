@@ -10,7 +10,10 @@ redirect_from:
 
 ### Tools for  Linguistics
 
-* [Writing your dissertation using LaTeX](https://www.overleaf.com/read/gpdctdsncwpc)
+* Writing your dissertation using LaTeX
+([Overleaf](https://www.overleaf.com/read/gpdctdsncwpc) | 
+[GitHub](https://github.com/gmholton/DissertationWriting) |
+[pdf]({% link files/DissertationWriting.pdf %}))
 * [Generic Style Rules for Linguistics](http://www.elpublishing.org/docs/public/generic-style-rules-linguistics.pdf) (pdf)
 * [Language Documentation Software](http://www.rnld.org/software)
 * [MPI Field Manuals and Stimulus Materials](http://fieldmanuals.mpi.nl/)
