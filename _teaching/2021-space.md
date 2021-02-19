@@ -32,4 +32,4 @@ At the end of this course students will be able to:
 * Course Readings, as assigned (available on [GoogleDrive](https://rebrand.ly/ling640G-readings));
 file naming convention: lastname-year-descriptive_title.pdf. 
 
-For more information see the complete [syllabus](https://bit.ly/ling640fall2021).
+For more information see the complete [syllabus](https://bit.ly/ling640Gfall2021).
