@@ -1,5 +1,8 @@
 # main links links
 main:
+  - title: "Research"
+    url: /research/
+
   - title: "Publications"
     url: /publications/
 
@@ -12,8 +15,6 @@ main:
   - title: "Undergrad"
     url: /undergrad/
 
-  - title: "Research"
-    url: /research/
 
 #  - title: "Service"
 #  url: /service/
