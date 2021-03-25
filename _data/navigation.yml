@@ -8,6 +8,9 @@ main:
 
   - title: "Teaching"
     url: /teaching/
+    
+  - title: "Undergrad"
+    url: /undergrad/
 
   - title: "Research"
     url: /research/
@@ -27,5 +30,8 @@ main:
   - title: "CV"
     url: /cv/
 
+  - title: "Posts"
+    url: /posts/
+    
 #  - title: "Guide"
 #    url: /markdown/
