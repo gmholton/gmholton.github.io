@@ -1,0 +1,16 @@
+---
+layout: archive
+title: "Posts"
+permalink: /posts/
+author_profile: true
+header:
+  overlay_image: olomana.jpg
+  overlay_filter: 0.3
+read_time: false
+---
+{% include base_path %}
+
+
+{% for post in site.posts  %}
+  {% include archive-single-post.html %}
+{% endfor %}
