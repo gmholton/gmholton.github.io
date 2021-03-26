@@ -11,9 +11,9 @@ main:
 
   - title: "Teaching"
     url: /teaching/
-    
-  - title: "Undergrad"
-    url: /undergrad/
+
+#  - title: "Undergrad"
+#    url: /undergrad/
 
 
 #  - title: "Service"
@@ -33,6 +33,6 @@ main:
 
   - title: "Posts"
     url: /posts/
-    
+
 #  - title: "Guide"
 #    url: /markdown/
