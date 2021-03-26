@@ -11,7 +11,7 @@
  */
 
 @mixin notice($notice-color) {
-  margin: 2em 0 !important;  /* override*/
+  margin: 2em 1em !important;  /* override*/
   padding: 1em;
   font-family: $global-font-family;
   font-size: $type-size-6 !important;
@@ -96,4 +96,8 @@
 
 .notice--danger {
   @include notice($danger-color);
+}
+
+.notice--uh {
+  @include notice($uh-color);
 }
