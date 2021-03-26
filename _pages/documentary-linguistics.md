@@ -1,6 +1,6 @@
 ---
+title: "Documentary Linguistics @ Mānoa"
 permalink: /documentary-linguistics/
-title: "documentary linguistics @ hawai‘i"
 excerpt: ""
 author_profile: true
 header:
