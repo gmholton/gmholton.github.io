@@ -11,6 +11,8 @@ description: "This course provides an introduction to the study of the complex i
 status: "active"
 ---
 
+*Note: we will attempt to adjust the meeting times for this course to accommodate student schedules.*
+
 ## Overview
 
 This course provides an introduction to the study of the complex interrelationships between language, landscape, and space. We examine the way that spatial concepts--particularly those linked to the landscape--are encoded in grammar. Although landscape permeates the human experience, the domain of landscape is a particularly challenging one for language documentation. Recent research has shown that typical landscape categories such as MOUNTAIN and RIVER are not universal semantic primitives but are in fact realized differently in different languages. Landscape is an essentially continuous domain, and the segmentation of this domain into discrete categories reflects a linguistic (and cultural) choice.
