@@ -5,7 +5,7 @@ permalink: /teaching/2021-space
 date: 2021-09-01
 term: "Fall 2021"
 crn:
-time: "Thursday 2:45-5:15 pm HST"
+time: "Wednesday 3:00-5:30 pm HST"
 location: "virtual"
 description: "This course provides an introduction to the study of the complex inter-relationships between language, landscape, and space."
 status: "active"
