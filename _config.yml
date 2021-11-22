@@ -86,7 +86,7 @@ analytics:
 # Site Author
 author:
   name             : ""
-  avatar           : "profile.png"
+  avatar           : "holton.jpg"  # "profile-bike.png"
   bio              : # "Professor of Lingusitics"
   location         : "Moore Hall 563"
   employer         : # "<a href='http://ling.hawaii.edu'>University of Hawai‘i</a>"
