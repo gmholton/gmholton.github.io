@@ -13,8 +13,8 @@ Professor of Linguistics<br>
 University of Hawai‘i at Mānoa
 
 <div class="notice--warning" markdown="1">
-#### COVID-19 Notice
-Due to the current University [COVID-19 response](https://www.hawaii.edu/emergency/important-health-information-novel-coronavirus/) I will be holding virtual office hours using Zoom video conferencing until further notice. Please schedule an appointment using my [Calendar](https://calendar.google.com/calendar/selfsched?sstoken=UURBRmdwbDRPZjRLfGRlZmF1bHR8ODA0MjEwZDhkMTYwMDRmNWI4MWYyNjc2OTI5YWQ3Yjg).
+#### On Leave
+I will be on sabbatical leave through December 2022. Don't hesitate to contact me if you have any questions, but please understand that responses may be delayed during this time.
 </div>
 
 As a documentary linguist my work focuses on the documentation, description and maintenance of Indigenous languages and knowledge systems, including especially the non-Austronesian (Papuan) languages of eastern Indonesia and the Dene languages of Alaska. Most of these languages have been marginalized as a result of the ongoing forces of globalization, and their systematic documentation can enhance language vitality and linguistic diversity, while also contributing to an understanding of the way human languages are structured.
