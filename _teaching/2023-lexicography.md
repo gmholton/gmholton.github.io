@@ -27,4 +27,14 @@ At the end of this course students will be able to:
 * articulate the role of audiences in dictionary design and the role(s) of dictionaries in endangered language communities 
 * make a dictionary for a minority or endangered language
 
+## Final Project
+
+For your final assignment and capstone project  you will create a dictionary. The format of the dictionary is up to you: print, online, mobile app, etc. The audience is also up to you: monolingual, bilingual, topical, pedagogical, etc. Your dictionary need not be complete (no dictionary ever really is), but it should be illustrative of what a more complete dictionary would look like. To that end it should have examples of all possible types of entries. It should also include front matter such as an explanation of the orthography and a guide to using the dictionary. 
+
+If you already have lexical data which you have collected, then you can use this as the basis for your dictionary. If not, the instructor can supply you with data which you can use to create your dictionary. You may also choose to draw on data from an existing dictionary, provided that the format of your dictionary is substantially different from the source dictionary. Please feel free to contact me to discuss project possibilities in advance. 
+
+Because of the various possible formats it is not possible to give precise guidelines about the required size of the dictionary project. However, grades will be based on the quality of your dictionary rather than the quantity of entries. Your time should be spent accordingly on creating detailed, high-quality entries.
+
+## Syllabus
+
 For more information see the [tentative syllabus](https://docs.google.com/document/d/1omPXRih7MptbuJkrNGWUnFHkU4ogcoNDf00I7JuOcQo/edit?usp=sharing).
