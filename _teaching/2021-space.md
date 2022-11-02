@@ -8,7 +8,7 @@ crn:
 time: "Wednesday 3:00-5:30 pm HST"
 location: "virtual"
 description: "This course provides an introduction to the study of the complex inter-relationships between language, landscape, and space."
-status: "active"
+status: "archived"
 ---
 
 *Note: we will attempt to adjust the meeting times for this course to accommodate student schedules.*
