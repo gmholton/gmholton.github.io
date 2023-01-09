@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # University settings
-office_hours             : "Schedule on [Google Calendar](https://calendar.google.com/calendar/selfsched?sstoken=UURBRmdwbDRPZjRLfGRlZmF1bHR8ODA0MjEwZDhkMTYwMDRmNWI4MWYyNjc2OTI5YWQ3Yjg)"
+office_hours             : "Schedule on <a href='https://calendar.google.com/calendar/selfsched?sstoken=UURBRmdwbDRPZjRLfGRlZmF1bHR8ODA0MjEwZDhkMTYwMDRmNWI4MWYyNjc2OTI5YWQ3Yjg)'>Google Calendar</a>"
 
 # Site Settings
 locale                   : "en-US"
