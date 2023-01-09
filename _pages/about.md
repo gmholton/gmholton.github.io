@@ -14,7 +14,9 @@ University of Hawai‘i at Mānoa
 
 <div class="notice--warning" markdown="1">
 #### Office Hours
-Tuesdays and Thursday 10:00-12:00 (in person); Wednesdays 1:00-3:00 (via Zoom).<br/>
+Tuesdays  10:00-12:00 (walk in)<br/>
+Wednesdays 1:00-3:00 (on Zoom, by appointment)<br/>
+Thursdays 10:00-12:00 (in person, by appointment)<br/>
 Please use my [Google Calendar](https://calendar.google.com/calendar/selfsched?sstoken=UURBRmdwbDRPZjRLfGRlZmF1bHR8ODA0MjEwZDhkMTYwMDRmNWI4MWYyNjc2OTI5YWQ3Yjg) to schedule an appointment. 
 </div>
 
