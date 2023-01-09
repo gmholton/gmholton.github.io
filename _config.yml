@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # University settings
-office_hours             : "By appointment (via Zoom)"
+office_hours             : "Schedule on [Google Calendar](https://calendar.google.com/calendar/selfsched?sstoken=UURBRmdwbDRPZjRLfGRlZmF1bHR8ODA0MjEwZDhkMTYwMDRmNWI4MWYyNjc2OTI5YWQ3Yjg)"
 
 # Site Settings
 locale                   : "en-US"
