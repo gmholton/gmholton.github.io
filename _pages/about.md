@@ -13,8 +13,8 @@ Professor of Linguistics<br>
 University of Hawai‘i at Mānoa
 
 <div class="notice--warning" markdown="1">
-#### On Leave
-Office Hours: Tuesdays and Thursday 10:00-12:00 (in person); Wednesdays 1:00-3:00 (via Zoom).<br/>
+#### Office Hours
+Tuesdays and Thursday 10:00-12:00 (in person); Wednesdays 1:00-3:00 (via Zoom).<br/>
 Please use my [Google Calendar](https://calendar.google.com/calendar/selfsched?sstoken=UURBRmdwbDRPZjRLfGRlZmF1bHR8ODA0MjEwZDhkMTYwMDRmNWI4MWYyNjc2OTI5YWQ3Yjg) to schedule an appointment. 
 </div>
 
