@@ -13,10 +13,10 @@ Professor of Linguistics and Graduate Chair<br>
 University of Hawai‘i at Mānoa
 
 <div class="notice--warning" markdown="1">
-#### Office Hours
-Tuesdays  10:00-12:00 (in person, Moore 563)<br/>
-Wednesdays 1:00-3:00 (Zoom)<br/>
-Thursdays 10:00-12:00 (Zoom)<br/>
+#### Office Hours (by appointment)
+Tuesdays  1:30-3:00 pm<br/>
+Wednesdays 9:00-12:00 am<br/>
+Thursdays 1:30-3:00 pm (Zoom)<br/>
 Please schedule appointments on [Google Calendar](https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0xSWZoY2TzWK_m0K5lAbNCr2doYJTOGaVCoHFsFP8lEdBnuh9gcqBvakBxiOqlrxyzYpeBC9bF). 
 </div>
 
