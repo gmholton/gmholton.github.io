@@ -8,7 +8,7 @@ crn: 87243
 time: "Tuesday/Thursday 3:00-4:15 pm HST"
 location: "Sakamaki B103"
 description: "This course provides an introduction to the study of the complex inter-relationships between language, landscape, and space."
-status: "active"
+status: "inactive"
 ---
 
 ## Overview
