@@ -17,7 +17,7 @@ University of Hawai‘i at Mānoa
 Tuesdays  10:00-12:00 (in person, Moore 563)<br/>
 Wednesdays 1:00-3:00 (Zoom)<br/>
 Thursdays 10:00-12:00 (Zoom)<br/>
-Please schedule appointments on [Google Calendar](https://calendar.google.com/calendar/appointments/schedules/AcZssZ1NnvuQHWFp3PUZJSyp1klsjBVjZOgZKZfbY7m1EachGq3NJkknu6AvtzzOxqY5tZ2Jy3_nmz83). 
+Please schedule appointments on [Google Calendar](https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0xSWZoY2TzWK_m0K5lAbNCr2doYJTOGaVCoHFsFP8lEdBnuh9gcqBvakBxiOqlrxyzYpeBC9bF). 
 </div>
 
 As a documentary linguist my work focuses on the documentation, description and maintenance of Indigenous languages and knowledge systems, including especially the non-Austronesian (Papuan) languages of eastern Indonesia and the Dene languages of Alaska. Most of these languages have been marginalized as a result of the ongoing forces of globalization, and their systematic documentation can enhance language vitality and linguistic diversity, while also contributing to an understanding of the way human languages are structured.
