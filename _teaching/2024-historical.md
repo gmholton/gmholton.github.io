@@ -27,8 +27,8 @@ While this course will be of interest to those wishing to specialize in the stud
 
 
 This course aims to provide an introduction to the basic concepts of
-historical linguistics. At the end of this course students will having familiarity with 
-the following techniques:
+historical linguistics. At the end of this course students will have familiarity with 
+the following concepts and methods:
 
 * the establishment of genetic relationship
 *  phonological reconstruction
