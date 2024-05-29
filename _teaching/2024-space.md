@@ -8,7 +8,7 @@ crn: "87715"
 time: "Mondays 3:00-5:30 pm"
 location: "Moore 203"
 description: "This course provides an introduction to the study of the complex inter-relationships between language, landscape, and space."
-status: "active"
+status: "inactive"
 ---
 
 *Note: we will attempt to adjust the meeting times for this course to accommodate student schedules.*
