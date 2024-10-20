@@ -22,6 +22,9 @@ redirect_from:
 * [Glottolog](http://glottolog.org)
 * [Reasons you should use video in language documentation](https://www.superlinguo.com/post/148949834781/reasons-you-should-use-video-in-language)
 * Run Fieldworks on a [virtual machine](https://mcdonn.github.io/2020-710/2020-710-syllabus/2020-710-syllabus.html#instructions_for_downloading_flex_on_virtual_machine) (thanks to [Brad McDonnell](http://www.bradleymcdonnell.org/))
+* [R for Graduate Students](https://bookdown.org/yih_huynh/Guide-to-R-Book/) (useful resource by Y. Wendy Huynh)
+
+
 
 ### Archiving
 * [Archiving for the Future](https://archivingforthefuture.teachable.com/), online archiving course
