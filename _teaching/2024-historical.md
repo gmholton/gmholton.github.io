@@ -8,7 +8,7 @@ crn: "79062"
 time: "Tuesday and Thursday 10:30-11:45 am HST"
 location: "Bilger 319"
 description: "This course is a hands-on introduction to the theory and practice of historical linguistics."
-status: "active"
+status: "inactive"
 ---
 
 
