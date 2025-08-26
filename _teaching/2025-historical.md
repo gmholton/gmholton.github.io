@@ -8,7 +8,7 @@ crn: "77925"
 time: "Monday and Wednesday 9:00-10:15 am HST"
 location: "Kuykendal 408"
 description: "This course is a hands-on introduction to the theory and practice of historical linguistics."
-status: "active"
+status: "inactive"
 ---
 
 
