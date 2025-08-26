@@ -9,15 +9,14 @@ redirect_from:
 
 ---
 
-Professor of Linguistics and Graduate Chair<br>
+Professor of Linguistics<br>
 University of Hawai‘i at Mānoa
 
 <div class="notice--warning" markdown="1">
-#### Office Hours (by appointment)
-Tuesdays  1:00-2:30 pm<br/>
-Wednesdays 1:00-3:00 pm<br/>
-Thursdays 1:00-2:30 pm <br/>
-Please schedule appointments on [Google Calendar](https://calendar.app.google/pFfEk5YLW8uSVCm16). 
+#### Office Hours 
+Mondays 1:30-3:00<br/>
+Tuesdays  10:00-12:00<br/>
+(or by appointment)<br/>
 </div>
 
 As a documentary linguist my work focuses on the documentation, description and maintenance of Indigenous languages and knowledge systems, including especially the non-Austronesian (Papuan) languages of eastern Indonesia and the Dene languages of Alaska. Most of these languages have been marginalized as a result of the ongoing forces of globalization, and their systematic documentation can enhance language vitality and linguistic diversity, while also contributing to an understanding of the way human languages are structured.
