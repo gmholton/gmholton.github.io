@@ -16,6 +16,10 @@ status: "active"
 * Gary Holton, Linguistics, holton@hawaii.edu
 * Tamara Ticktin, Botany, ticktin@hawaii.edu
 * Alexander Mawyer, CPIS, mawyer@hawaii.edu
+* Rachel Dacks, NREM, rdacks@hawaii.edu
+* Aimee Sato, HIMB, aimeeys@hawaii.edu
+* Kawika Winter, HIMB, kawikaw@hawaii.edu
+
 
 
 ## Overview
@@ -36,4 +40,4 @@ At the end of this course students will be able to:
 
 Course Readings, as assigned (available at [here](http://bit.ly/biocultural2019readings)).
 
-<!-- For more information see the complete [syllabus](https://docs.google.com/document/d/148SUlSr5GI6wNgaCtcnn0ZjT9v30z8ORhXLs_Hmkf8s/edit?usp=sharing).-->
+For more information see the complete [syllabus]([https://docs.google.com/document/d/148SUlSr5GI6wNgaCtcnn0ZjT9v30z8ORhXLs_Hmkf8s/edit?usp=sharing](https://docs.google.com/document/d/e/2PACX-1vRb7cuUUZcASSss9-pqFiBFJCdGZuD0M6ZAnLmtzKrqn4bn-v9TDhPCQaD0ROVxEQtHui8X-yU9MC0b/pub)).
