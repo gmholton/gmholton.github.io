@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # University settings
-office_hours             : "Mon 1:30-3:30, Tues 10:00-12:00 (or by appt)" #"Schedule on <a href='https://calendar.app.google/pFfEk5YLW8uSVCm16'>Google Calendar</a>"
+office_hours             : "Mon 1:30-3:30, Tues 10:00-12:00 (or by appt)" #"Schedule on <a href='https://calendar.app.google/2RFL5a7CGAtGY3wT6'>Google Calendar</a>"
 
 # Site Settings
 locale                   : "en-US"
