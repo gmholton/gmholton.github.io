@@ -4,10 +4,10 @@ collection: teaching
 permalink: /teaching/2026-lexicography
 date: 2025-08-25
 term: "Spring 2026"
-crn: TBA
+crn: 88637
 time: "Thursday 3:00-5:30 pm HST"
-location: "TBA"
-description: "This course provides an introduction to the study of the complex inter-relationships between language, landscape, and space."
+location: "Moore 112"
+description: "Introduction to lexicography for minority and endangered languages."
 status: "active"
 ---
 
@@ -37,5 +37,4 @@ Because of the various possible formats it is not possible to give precise guide
 
 ## Syllabus
 
-The course syllabus will be posted later in the Fall 2025 term. 
-Meanwhile, a syllabus for the previous iteration of the course is available [here](https://docs.google.com/document/d/1omPXRih7MptbuJkrNGWUnFHkU4ogcoNDf00I7JuOcQo/edit?usp=sharing).
+The course syllabus is available [here](https://docs.google.com/document/d/1VyqPV4P7R21blK-OHmttrHFck9Bx1hByJt-6sFLNU8I/edit?usp=sharing). 
