@@ -14,9 +14,9 @@ University of Hawai‘i at Mānoa
 
 <div class="notice--warning" markdown="1">
 #### Office Hours 
-Mondays 1:30-3:00<br/>
-Tuesdays  10:00-12:00<br/>
-(or by appointment)<br/>
+Tuesdays 2:15-3:30 pm (Moore 563)<br/>
+Wednesdays  10:00-12:00 (Zoom)<br/>
+(Schedule appointments on <a href='https://calendar.app.google/TbBu6sCSkvqViZqW6'>Google Calendar</a>)<br/>
 </div>
 
 As a documentary linguist my work focuses on the documentation, description and maintenance of Indigenous languages and knowledge systems, including especially the non-Austronesian (Papuan) languages of eastern Indonesia and the Dene languages of Alaska. Most of these languages have been marginalized as a result of the ongoing forces of globalization, and their systematic documentation can enhance language vitality and linguistic diversity, while also contributing to an understanding of the way human languages are structured.
