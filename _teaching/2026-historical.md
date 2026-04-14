@@ -1,14 +1,14 @@
 ---
 title: "LING 645: Introduction to Historical Linguistics"
 collection: teaching
-permalink: /teaching/2024-historical
+permalink: /teaching/2026-historical
 date: 2025-03-01
-term: "Fall 2025"
-crn: "77925"
-time: "Monday and Wednesday 9:00-10:15 am HST"
-location: "Kuykendal 408"
+term: "Fall 2026"
+crn: "80674"
+time: "Tuesday and Thursday 9:00-10:15 am HST"
+location: "Sakamaki C201"
 description: "This course is a hands-on introduction to the theory and practice of historical linguistics."
-status: "inactive"
+status: "active"
 ---
 
 
@@ -52,5 +52,5 @@ Introductory course in linguistics and familiarity with baisc linear phonology.
 * Additional Readings, as assigned
 
 Fall 2024 syllabus available [here](https://docs.google.com/document/d/122U32L3H3pjc_b9VeX5lvCMrzgXhfxmUSSMYVUZH2qw/edit?usp=sharing)
-for reference. (Update syllabus will be posted August 2025.)
+for reference. (Update syllabus will be posted August 2026.)
 
