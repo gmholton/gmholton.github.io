@@ -8,7 +8,7 @@ crn: 79629
 time: "Tuesdays 1:30-4:30 pm"
 location: "Sakamaki D101"
 description: "This is a seminar course which introduces students to the field of biocultural diversity and conservation, emphasizing transdisciplinary approaches to understanding the interrelationships between culture, ecology, and language. This course features lectures and discussions by key UH Mānoa faculty in anthropology, biology, botany, Hawaiian studies, natural resources, linguistics, literature, law, and more."
-status: "active"
+status: "inactive"
 ---
 
 ## Instructors
