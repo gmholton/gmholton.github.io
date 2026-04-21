@@ -2,7 +2,7 @@
 title: "LING 645: Introduction to Historical Linguistics"
 collection: teaching
 permalink: /teaching/2026-historical
-date: 2025-03-01
+date: 2026-03-01
 term: "Fall 2026"
 crn: "80674"
 time: "Tuesday and Thursday 9:00-10:15 am HST"
