@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LING 645 Tree-Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday teaching tool: clear, exact, projected in class and used on laptops
+   IDEA a lab bench: one cognate matrix feeds four instruments that build trees from it
+   PICTURE the trees themselves, drawn live: UPGMA dendrogram, NJ and parsimony radial trees, an MCMC walker with its trace
+   COLOUR white ground, sky band #4fb3e8, ink #10223a, orange #ff7a1a for the thing to look at; night #0b1726
+   TYPE Outfit 600 for headings and figures, Inter for text
+   LAYOUT sky band with title + dataset picker, then four full-width sections, each picture-first with controls beside; stacks below 760px */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0b1726);--ink:light-dark(#10223a,#e6eef7);--mute:light-dark(#5b6b7e,#9fb0c3);--line:light-dark(#dfe6ee,#22344a);--panel:light-dark(#f3f8fc,#112239);--sky:light-dark(#4fb3e8,#1d5f86);--skyink:light-dark(#0a2238,#ffffff);--hot:#ff7a1a;--hotsoft:light-dark(#ffe6d4,#4a2a14);--blue:light-dark(#1f78b4,#6cc0f0)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Outfit,Inter,sans-serif;line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1{font-size:clamp(34px,5vw,52px);font-weight:700}
+h2{font-size:clamp(26px,3vw,34px);font-weight:600}
+h3{font-size:19px;font-weight:600;margin-bottom:8px}
+p{margin:0 0 10px;max-width:70ch}
+.band{padding-block:clamp(24px,3.5vw,52px);padding-inline:max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.top{background:var(--sky);color:var(--skyink)}
+.top .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:end}
+.top p{font-size:17px;margin-top:12px}
+.pick{display:grid;gap:8px}
+label{font-size:14px;font-weight:600}
+select,input[type=number],textarea{font:16px Inter,sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:9px 10px}
+.top select{border-color:transparent;min-height:44px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:6px max(5vw,16px)}
+nav a{flex:none;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px;padding:10px 14px;border-radius:8px}
+nav a:hover{background:var(--panel)}
+section{border-bottom:1px solid var(--line)}
+.head{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.head p{color:var(--mute);margin:0}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.grid3{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px}
+.card{background:var(--panel);border-radius:14px;padding:18px}
+.fig{position:relative;min-height:340px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.fig.short{min-height:150px}
+body.big .fig:not(.short){min-height:520px}
+.try[hidden]{display:none}
+svg text{font:14px Inter,sans-serif;fill:var(--ink);paint-order:stroke;stroke:var(--panel);stroke-width:4px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+th{font-weight:600}
+td.m,th.m{text-align:left}
+.matbox{max-height:min(460px,70vh);overflow:auto;border:1px solid var(--line);border-radius:12px}
+.mat thead th{position:sticky;top:0;background:var(--bg);z-index:1}
+.mat input{width:2.6em;text-align:center;font:600 15px Inter,sans-serif;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);padding:5px 0}
+.mat tr.off td{opacity:.38}
+.mat input[type=checkbox]{width:20px;height:20px;accent-color:var(--hot)}
+.dist td{min-width:3.2em}
+.btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 15px Inter,sans-serif;min-height:44px;padding:0 16px;border-radius:10px;border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);cursor:pointer}
+button.go{background:var(--hot);border-color:var(--hot);color:#1a0d00}
+button:hover{filter:brightness(1.05)}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
+.rank{display:grid;gap:4px;margin-top:6px}
+.rank button{display:grid;grid-template-columns:3.2em minmax(0,1fr);gap:10px;text-align:left;font-weight:500;font-size:14px;border:1px solid var(--line);min-height:40px;padding:6px 10px;align-items:center}
+.rank button b{font:600 18px Outfit,sans-serif}
+.rank button.sel{border:2px solid var(--hot);background:var(--hotsoft)}
+.bars{display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr) 3.4em;gap:10px;align-items:center;font-size:14px}
+.bar i{display:block;height:14px;border-radius:7px;background:var(--line)}
+.bar i span{display:block;height:100%;border-radius:7px;background:var(--blue)}
+.bar.maj i span{background:var(--hot)}
+.bar em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ctl{display:grid;gap:14px}
+.ctl .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center}
+input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--hot);height:28px}
+.stat{display:flex;flex-wrap:wrap;gap:6px 22px}
+.stat div{font-size:14px;color:var(--mute)}
+.stat b{display:block;font:600 26px Outfit,sans-serif;color:var(--ink);white-space:nowrap}
+.log{font-size:14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:3.2em}
+.log .acc{color:var(--blue);font-weight:600}.log .rej{color:var(--hot);font-weight:600}
+.try{border-left:0;background:var(--hotsoft);border-radius:12px;padding:12px 16px;margin-top:18px}
+.try h3{font-size:17px;margin-bottom:4px}
+.try ol{margin:0;padding-left:1.3em}
+.try li{margin:4px 0}
+.note{font-size:14px;color:var(--mute)}
+.flag{color:var(--hot);font-weight:600}
+details{margin-top:12px}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+textarea{width:100%;min-height:150px;font:14px ui-monospace,Menlo,monospace}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:13px}
+@media(max-width:860px){.top .wrap,.grid2,.grid3{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){table{font-size:13px}th,td{padding:4px 5px}.bar{grid-template-columns:minmax(0,7em) minmax(0,1fr) 3em}.fig{min-height:300px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="band top">
+  <div class="wrap">
+    <div>
+      <h1>LING 645<br/>Tree-Builder</h1>
+      <p>One cognate matrix, multiple ways to build a family tree: shared-cognate percentages, neighbor-joining, NeighborNet, parsimony and a Bayesian-style MCMC walk. Edit the data and every tree redraws.</p>
+    </div>
+    <div class="pick">
+      <label for="preset">Dataset</label>
+      <select id="preset"></select>
+      <div id="dsinfo" style="font-size:14px"></div>
+    </div>
+  </div>
+</header>
+<nav><div class="wrap"><a href="#data">Data</a><a href="#distance">Distance</a><a href="#parsimony">Parsimony</a><a href="#mcmc">MCMC</a></div></nav>
+
+<section class="band" id="data"><div class="wrap">
+  <div class="try" id="dsnote" hidden style="margin:0 0 18px"></div>
+  <div class="head"><h2>The cognate matrix</h2><p>Same letter in a row = same cognate set. Blank or ? = missing. Untick a row to drop it.</p></div>
+  <div class="scroll matbox"><table class="mat" id="mat"></table></div>
+  <div class="btns" style="margin-top:14px"><button id="allon">Include all rows</button><button id="copytsv">Copy as TSV</button><span class="note" id="copymsg"></span></div>
+  <details><summary>Paste your own data</summary>
+    <p class="note">Tab- or comma-separated. First row: <span class="mono">meaning, Lang1, Lang2, …</span>. Then one row per meaning with cognate-set labels (any letters or numbers). Up to 60 languages; '?', '-' or a blank cell means missing.</p>
+    <textarea id="paste" spellcheck="false"></textarea>
+    <div class="btns" style="margin-top:8px"><button class="go" id="load">Load pasted data</button><span class="note" id="pastemsg"></span></div>
+  </details>
+</div></section>
+
+<section class="band" id="distance"><div class="wrap">
+  <div class="head"><h2>Distance: count, average, cluster</h2><p>Lexicostatistics turns the matrix into one number per pair, then throws the characters away.</p></div>
+  <div class="grid2">
+    <div class="card"><h3>Percent shared cognates</h3><div class="scroll"><table class="dist" id="dist"></table></div>
+      <p class="note" style="margin-top:10px">Darker = more shared. Pairs are compared only on meanings where both have data.</p></div>
+    <div class="card"><h3>UPGMA tree (lexicostatistics)</h3><div class="fig" id="upgma"></div>
+      <p class="note" id="upnote" hidden><b>Proto is left out here:</b> UPGMA always puts the root itself, between the two most different groups. The other trees on this page are rooted on Proto.</p><p class="note">Joins the closest pair, averages, repeats. Assumes every language changes at the same rate, so it always produces a rooted tree with all tips lined up.</p></div>
+  </div>
+  <div class="card" style="margin-top:24px"><div class="grid3">
+    <div><h3>Neighbor-joining tree</h3><div class="fig" id="nj"></div></div>
+    <div><p style="margin-top:28px">Neighbor-joining uses the same distances but corrects for each language's overall distance from all the others, so a fast-changing language gets a long branch instead of being pushed to the edge of the tree.</p>
+    <p id="njun">The result is <b>unrooted</b>: it shows who groups with whom, not where the ancestor sits. Branch lengths are drawn to scale.</p><p id="njro" hidden>Neighbor-joining itself produces an <b>unrooted</b> tree. Here it is rooted on the proto-language, which is included as if it were a language with no changes. Branch lengths are drawn to scale.</p></div>
+  </div></div>
+  <div class="card" style="margin-top:24px"><div class="grid3">
+    <div><h3>NeighborNet network</h3><div class="fig" id="nnet"></div></div>
+    <div><p style="margin-top:28px">NeighborNet uses the same distances but does not force them into a tree. Where the distances support two groupings that cannot both be in one tree, it draws both, and the conflict appears as a box of parallel edges.</p>
+    <p>A long, thin box means weak conflict; a fat box means strong conflict. Where there is no box, the data are tree-like. Like neighbor-joining, the network is unrooted, and edge lengths are drawn to scale.</p>
+    <p class="note" id="nnfit"></p></div>
+  </div></div>
+  <div class="try tav"><h3>Try this (Tavaric set)</h3><ol>
+    <li>Find the pair with the highest percentage. Does UPGMA join it first?</li>
+    <li>Compare where Faru sits in the UPGMA and NJ trees. Which tree says Faru belongs with Dara and Eno?</li>
+    <li>Count Faru's unique cognate sets in the matrix. What does that do to its percentages, and why does UPGMA misread it?</li>
+    <li>Find the box in the NeighborNet. Which two groupings does it show in conflict? Which rows of the matrix could cause it? Untick them and watch the box.</li>
+  </ol></div>
+</div></section>
+
+<section class="band" id="parsimony"><div class="wrap">
+  <div class="head"><h2>Parsimony: fewest changes wins</h2><p>Every possible tree is scored by the minimum number of cognate replacements it needs.</p></div>
+  <div class="grid3">
+    <div class="card"><h3 id="ptitle">Selected tree</h3><div class="fig" id="ptree"></div><div id="pextra"></div></div>
+    <div><h3 id="pcount">Best trees</h3><p class="note">Click a tree to draw it. Lower is better.</p><div class="rank" id="rank"></div></div>
+  </div>
+  <div class="try tav"><h3>Try this (Tavaric set)</h3><ol>
+    <li>Which meanings need extra changes on the best tree? Look at those rows in the matrix. What could explain them?</li>
+    <li>Untick those rows. How much does the gap between the best and second-best tree grow?</li>
+    <li>Rows where every language agrees, or only one language differs, never change a score. Why not?</li>
+  </ol></div>
+</div></section>
+
+<section class="band" id="mcmc"><div class="wrap">
+  <div class="head"><h2>MCMC: a random walk through tree space</h2><p>Each step swaps two branches. Better trees are always accepted; worse ones only some of the time.</p></div>
+  <div class="grid3">
+    <div class="card">
+      <h3>Current tree</h3><div class="fig" id="mtree"></div>
+      <h3 style="margin-top:6px">Trace: changes needed at each step</h3><div class="fig short" id="trace"></div>
+    </div>
+    <div class="ctl">
+      <div class="stat"><div>Step<b id="sIter">0</b></div><div>Current score<b id="sScore">–</b></div><div>Accepted<b id="sAcc">–</b></div><div>Trees sampled<b id="sSamp">0</b></div><div>Best found<b id="sBest">–</b></div></div>
+      <div class="btns"><button class="go" id="run">Run</button><button id="step">Step once</button><button id="reset">Reset</button></div>
+      <div class="log" id="log">Press <b>Step once</b> to watch a single proposal, or <b>Run</b> to let the chain go.</div>
+      <div class="row"><label for="beta">Preference for fewer changes (β)</label><b id="betaV"></b><input type="range" id="beta" min="0.2" max="3" step="0.1" value="1"></div>
+      <div class="row"><label for="speed">Steps per frame</label><b id="speedV"></b><input type="range" id="speed" min="1" max="200" step="1" value="20"></div>
+      <div class="row"><label for="burn">Burn-in steps (not sampled)</label><input type="number" id="burn" min="0" max="100000" value="200" style="width:7em"></div>
+      <p class="note">How it decides: a tree that needs Δ more changes than the current one is accepted with probability e<sup>−βΔ</sup>. With β = 1, a tree 1 change worse is accepted about 37% of the time and one 2 changes worse about 14%. Higher β makes the walker stick close to the best trees; lower β lets it wander. A real Bayesian program uses a model of cognate gain and loss here instead of a change count.</p>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><h3>Clade support across sampled trees</h3><div class="bars" id="support"><p class="note">Run the chain to collect samples.</p></div></div>
+    <div class="card"><h3>Majority-rule consensus</h3><div class="fig" id="cons"></div><p class="note">Only groups found in more than half the samples. Support percentages are on the branches for small datasets and in the list for large ones.</p></div>
+  </div>
+  <div class="try tav"><h3>Try this (Tavaric set)</h3><ol>
+    <li>Run 5,000 steps with all rows included. What support does Dara + Eno + Faru get? What competes with it?</li>
+    <li>Reset, untick the rows parsimony flagged, and run again. What happens to support for each group?</li>
+    <li>Set β to 0.3 and then to 3. Which setting explores more trees? Which gives a more confident consensus, and should we trust it?</li>
+  </ol></div>
+</div></section>
+
+
+
+<script>
+{
+const PRESETS={
+ tavaric:{label:'Tavaric (6 languages)',info:'Constructed data with 31 meanings.',
+  langs:['Alu','Belu','Camo','Dara','Eno','Faru'],
+  rows:[["belly","AABBBA"],["bird","AAABBB"],["eye","AAAAAB"],["breast","AABBBA"],["liver","AABBBA"],["star","AABBBB"],["leaf","AABBBB"],["mouth","AAAAAB"],["water","AAAAAA"],["blood","AAABBA"],["root","AAABBB"],["bone","AAABBA"],["tooth","AAAAAB"],["tongue","AAAAAB"],["nose","AAAAAB"],["egg","AAABBA"],["hand","AAAAAB"],["knee","AAAABA"],["tree","AABBBB"],["skin","AAABBA"],["foot","ABAAAA"],["head","AAAAAB"],["dog","AAABBB"],["sun","AAAAAA"],["hair","AAAAAB"],["stone","AAAAAA"],["fire","AAAAAA"],["ear","AAAAAB"],["louse","AAABBB"],["moon","AABBBB"],["fish","AAABBB"]]},
+ koiarian:{label:'Koiarian (Crowley & Bowern 2010)',info:'Koita, Koiari, Mountain Koiari. 25 meanings, cognate sets as on the slides.',
+  langs:['Koita','Koiari','Mtn Koiari'],
+  rows:[["man","AAB"],["woman","AAB"],["child","AAA"],["boy","AAB"],["husband","AAB"],["wife","AAB"],["father","AAA"],["mother","AAA"],["1sg","AAA"],["2sg","AAA"],["3sg","AAA"],["head","ABB"],["hair","ABC"],["nose","AAA"],["ear","AAB"],["tongue","ABB"],["chin","ABC"],["mouth","AAB"],["back","ABC"],["leg","ABC"],["sun","AAA"],["star","ABC"],["cloud","ABC"],["rain","AAA"],["wind","ABC"]]},
+ aesc0:{label:'Languages A–E: sound changes as innovations, without Proto',info:'1 = the language underwent the change, 0 = kept the old sound. No ancestor is included, so the trees are unrooted (as in Ringe et al.).',
+  langs:['A','B','C','D','E'],rows:[["*s > h", "11011"], ["*t > h before *i", "10010"], ["final *n > ŋ", "01010"], ["*p > f (A, B)", "11000"], ["*p > h (D)", "00010"], ["*p > f (A, B, D): alternative", "11010", false], ["*f > h (D): alternative", "00010", false], ["*t > ʔ", "00100"], ["*l > r", "00100"], ["*h > Ø", "00010"], ["final *m > n", "10000"], ["final *m > ŋ", "00010"], ["*b > f", "10000"], ["*b > h", "00010"]],
+  note:'<h3>Try this with the A–E innovations (no Proto)</h3><ol><li>Which changes divide the languages into two groups with at least two languages on each side?</li><li>In Parsimony, how many trees tie for best? Where does C go in them? Is there any evidence that C split off first?</li><li>*s > h is shared by four languages. Why does it not help choose between trees here?</li><li>Now switch to the next dataset, the same changes with Proto added as the ancestor. What changes, and why?</li></ol>'},
+ aesc:{label:'Languages A–E: sound changes as innovations, with Proto as root',info:'1 = the language underwent the change, 0 = kept the proto sound. Proto is all 0s; the trees are drawn rooted on it.',
+  rooted:true,langs:['Proto','A','B','C','D','E'],rows:[["*s > h", "011011"], ["*t > h before *i", "010010"], ["final *n > ŋ", "001010"], ["*p > f (A, B)", "011000"], ["*p > h (D)", "000010"], ["*p > f (A, B, D): alternative", "011010", false], ["*f > h (D): alternative", "000010", false], ["*t > ʔ", "000100"], ["*l > r", "000100"], ["*h > Ø", "000010"], ["final *m > n", "010000"], ["final *m > ŋ", "000010"], ["*b > f", "010000"], ["*b > h", "000010"]],
+  note:'<h3>Try this with the A–E innovations (Proto as root)</h3><ol><li>Which changes split the languages into groups, and which affect only one language?</li><li>In Parsimony, how many trees tie for best? Which three changes conflict with each other?</li><li>Untick the two default *p rows and tick the two “alternative” rows (D’s h came from an earlier f). What changes, and who decides which coding is right?</li><li>Run MCMC for 10,000 steps. Every best parsimony tree has A + B + D + E, so why does that group get only about a third of the samples? Why do A + B, A + D and B + D come out almost equal?</li><li>Does the program tell you anything that subgrouping by hand would not?</li></ol>'},
+ ie:{beta:2,burn:2000,label:'Indo-European: phonological and morphological characters (Ringe et al.)',info:'24 languages, 36 characters (P = phonological, M = morphological). Numbers are state labels.',
+  langs:["Hittite", "Armenian", "Greek", "Albanian", "Tocharian B", "Vedic", "Avestan", "Old Church Slavonic", "Lithuanian", "Old English", "Old Irish", "Latin", "Luvian", "Lycian", "Tocharian A", "Old Persian", "Old Prussian", "Latvian", "Gothic", "Old Norse", "Old High German", "Welsh", "Oscan", "Umbrian"],rows:[["P1", ["4", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "5", "6", "1", "1", "1", "1", "1", "1", "1", "2", "3", "3"]], ["P2", ["1", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1", "1", "1", "2", "2", "2", "1", "1", "1", "1", "1", "1"]], ["P3", ["1", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1", "1", "1", "2", "3", "4", "1", "1", "1", "1", "1", "1"]], ["P4", ["2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P5", ["2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P6", ["2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P7", ["2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P8", ["1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P9", ["1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P10", ["1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P11", ["1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P12", ["1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P13", ["1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1", "1", "1", "3", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P14", ["1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1"]], ["P15", ["1", "1", "1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1"]], ["P16", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "2", "1", "1", "1"]], ["P17", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "2", "1", "1", "1"]], ["P18", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "1", "1", "1"]], ["P19", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1"]], ["P20", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1"]], ["P21", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1"]], ["P22", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2"]], ["M1a", ["1", "2", "2", "2", "3", "2", "2", "2", "4", "5", "6", "2", "1", "1", "3", "2", "4", "4", "5", "5", "5", "7", "2", "2"]], ["M1b", ["1", "2", "2", "2", "3", "2", "2", "2", "4", "5", "6", "2", "7", "7", "3", "2", "4", "4", "5", "5", "5", "8", "2", "2"]], ["M2", ["2", "1", "1", "3", "4", "1", "1", "5", "6", "7", "8", "9", "10", "11", "12", "1", "13", "14", "15", "16", "17", "18", "19", "20"]], ["M3", ["1", "2", "2", "3", "2", "2", "2", "2", "4", "5", "2", "2", "1", "1", "2", "6", "7", "8", "9", "10", "11", "12", "2", "2"]], ["M4", ["1", "4", "1", "5", "3", "6", "7", "8", "9", "10", "11", "2", "12", "13", "3", "14", "15", "16", "17", "18", "19", "20", "21", "22"]], ["M5", ["1", "3", "2", "4", "1", "2", "2", "5", "6", "2", "1", "1", "1", "7", "1", "2", "8", "9", "2", "2", "10", "1", "1", "1"]], ["M6", ["4", "5", "2", "6", "1", "2", "2", "2", "2", "2", "3", "3", "7", "8", "1", "2", "2", "2", "2", "2", "2", "3", "3", "3"]], ["M8", ["3", "4", "1", "5", "6", "1", "1", "7", "8", "1", "2", "2", "9", "10", "11", "1", "12", "13", "1", "1", "1", "2", "2", "2"]], ["M11", ["1", "1", "1", "3", "1", "1", "1", "1", "1", "1", "2", "2", "1", "4", "1", "1", "1", "1", "1", "1", "1", "5", "2", "2"]], ["M12", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "3"]], ["M13", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2"]], ["M14", ["1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "2", "2", "1", "1", "1", "1", "1", "1"]], ["M15", ["1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1"]]],
+  note:'<h3>Try this with Indo-European</h3><ol><li>There are too many trees to list, so go to MCMC, set steps per frame to 200 and run about 40,000 steps (β is set to 2 for this dataset). Which groups reach nearly 100%? Which named branches of Indo-European are missing from the list?</li><li>What happens to groupings above the level of the branches (for example, which branch joins which)? Why would sound changes and morphology settle low-level subgroups but say little about the higher ones?</li><li>Find P1 and the M6, M8 and M11 rows in the matrix. Which languages do they group, and what hypothesis do they bear on?</li><li>Compare the UPGMA and neighbor-joining trees with the NeighborNet. Which branches stand clear of the rest, and where is the network most tangled?</li></ol>'}
+};
+let S={langs:[],rows:[]};let ROOTED=false;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+function loadPreset(k){const p=PRESETS[k];S={langs:p.langs.slice(),rows:p.rows.map(r=>({m:r[0],c:Array.isArray(r[1])?r[1].slice():[...r[1]],on:r[2]!==false}))};$('dsinfo').textContent=p.info;ROOTED=!!p.rooted;document.querySelectorAll('.tav').forEach(e=>e.hidden=(k!=='tavaric'));$('beta').value=p.beta||1;$('betaV').textContent=(+$('beta').value).toFixed(1);$('burn').value=p.burn||200;$('dsnote').innerHTML=p.note||'';$('dsnote').hidden=!p.note;renderMatrix();recompute(true);}
+function renderMatrix(){
+  const L=S.langs;
+  $('mat').innerHTML='<thead><tr><th>Use</th><th class="m">Meaning</th>'+L.map(l=>'<th>'+esc(l)+'</th>').join('')+'</tr></thead><tbody>'+
+  S.rows.map((r,i)=>'<tr class="'+(r.on?'':'off')+'"><td><input type="checkbox" aria-label="use '+esc(r.m)+'" data-r="'+i+'" '+(r.on?'checked':'')+'></td><td class="m">'+esc(r.m)+'</td>'+
+   r.c.map((v,j)=>'<td><input aria-label="'+esc(r.m)+' '+esc(L[j])+'" data-r="'+i+'" data-c="'+j+'" value="'+esc(v)+'" maxlength="3"></td>').join('')+'</tr>').join('')+'</tbody>';
+}
+$('mat').addEventListener('input',e=>{const t=e.target,r=+t.dataset.r;if(t.type==='checkbox'){S.rows[r].on=t.checked;t.closest('tr').className=t.checked?'':'off';}else{S.rows[r].c[+t.dataset.c]=t.value.trim();}recompute(true);});
+$('allon').onclick=()=>{S.rows.forEach(r=>r.on=true);renderMatrix();recompute(true);};
+$('copytsv').onclick=async()=>{const t=['meaning\t'+S.langs.join('\t'),...S.rows.map(r=>r.m+'\t'+r.c.join('\t'))].join('\n');try{await navigator.clipboard.writeText(t);$('copymsg').textContent='Copied.';}catch(e){$('paste').value=t;$('copymsg').textContent='Clipboard blocked: the data is in the paste box below.';}};
+$('load').onclick=()=>{$('dsnote').hidden=true;document.querySelectorAll('.tav').forEach(e=>e.hidden=true);ROOTED=false;
+  const lines=$('paste').value.trim().split(/\r?\n/).filter(x=>x.trim());
+  const sp=l=>l.includes('\t')?l.split('\t'):l.split(',');
+  if(lines.length<2){$('pastemsg').textContent='Need a header row and at least one data row.';return;}
+  const h=sp(lines[0]).map(x=>x.trim());const L=h.slice(1);
+  if(L.length<3||L.length>60){$('pastemsg').textContent='Use between 3 and 60 languages.';return;}
+  const rows=lines.slice(1).map(l=>{const c=sp(l).map(x=>x.trim());return{m:c[0]||'?',c:L.map((_,j)=>c[j+1]??''),on:true};});
+  S={langs:L,rows};$('dsinfo').textContent='Your data: '+L.length+' languages, '+rows.length+' meanings.';$('pastemsg').textContent='Loaded.';renderMatrix();recompute(true);
+};
+
+/* ---------- characters ---------- */
+let CH=[],N=0;
+function buildChars(){
+  N=S.langs.length;CH=[];document.body.classList.toggle('big',N>12);
+  for(const r of S.rows){if(!r.on)continue;const map={};const st=r.c.map(v=>{if(v===''||v==='?'||v==='-')return -1;if(!(v in map))map[v]=Object.keys(map).length;return map[v];});
+    const k=Object.keys(map).length;if(k===0)continue;const all=(1<<k)-1;CH.push({m:r.m,leaf:st.map(s=>s<0?all:1<<s),k});}
+}
+function shared(){const P=[];for(let i=0;i<N;i++){P.push([]);for(let j=0;j<N;j++){let n=0,s=0;for(const r of S.rows){if(!r.on)continue;const a=r.c[i],b=r.c[j];if(!a||!b||a==='?'||b==='?')continue;n++;if(a===b)s++;}P[i].push(n?s/n:0);}}return P;}
+
+/* ---------- tree utilities (trees rooted on language 0: T is a nested pair over 1..N-1) ---------- */
+function fitch(T){let total=0;for(const c of CH){let cost=0;const f=x=>{if(typeof x==='number')return c.leaf[x];const a=f(x[0]),b=f(x[1]);const i=a&b;if(i)return i;cost++;return a|b;};const r=f(T);if(!(r&c.leaf[0]))cost++;total+=cost;}return total;}
+function perChar(T){return CH.map(c=>{let cost=0;const f=x=>{if(typeof x==='number')return c.leaf[x];const a=f(x[0]),b=f(x[1]);const i=a&b;if(i)return i;cost++;return a|b;};const r=f(T);if(!(r&c.leaf[0]))cost++;let obs=0;for(let s=0;s<c.k;s++){if(c.leaf.some(m=>m===1<<s))obs++;}return{m:c.m,cost,min:Math.max(0,obs-1)};});}
+function enumerate(n){if(n<3)return[];let ts=[[1,2]];for(let k=3;k<n;k++){const nx=[];for(const t of ts){const ins=x=>{const out=[[x,k]];if(typeof x!=='number'){for(const y of ins(x[0]))out.push([y,x[1]]);for(const y of ins(x[1]))out.push([x[0],y]);}return out;};nx.push(...ins(t));}ts=nx;}return ts;}
+const B1=1n,bit=i=>B1<<BigInt(i),ALL=()=>(B1<<BigInt(N))-B1;
+function splits(T){const out=[];const full=ALL()-B1;const f=x=>{if(typeof x==='number')return bit(x);const m=f(x[0])|f(x[1]);if(m!==full&&(m&(m-B1)))out.push(m);return m;};f(T);return out;}
+function canon(m){const c=ALL()^m;if(ROOTED)return(m&B1)?c:m;return pc(c)<pc(m)?c:m;}
+function groupName(m){m=canon(m);const n=[];for(let i=0;i<N;i++)if((m>>BigInt(i))&B1)n.push(S.langs[i]);return n.join(' + ');}
+function randomTree(){let t=[1,2];for(let k=3;k<N;k++){const edges=[];const walk=(x,p)=>{edges.push(p);if(typeof x!=='number'){walk(x[0],p.concat(0));walk(x[1],p.concat(1));}};walk(t,[]);const p=edges[Math.floor(Math.random()*edges.length)];t=insertAt(t,p,k);}return t;}
+function insertAt(t,p,k){if(!p.length)return[t,k];const c=t.slice();c[p[0]]=insertAt(t[p[0]],p.slice(1),k);return c;}
+function nni(T){const E=[];const walk=(x,p)=>{if(typeof x==='number')return;for(const i of[0,1]){if(typeof x[i]!=='number')E.push(p.concat(i));walk(x[i],p.concat(i));}};walk(T,[]);if(!E.length)return T;
+  const p=E[Math.floor(Math.random()*E.length)],k=Math.random()<.5?0:1;
+  const rec=(x,d)=>{if(d===p.length-1){const ci=p[d],c=x[ci],s=x[1-ci];const nc=[s,c[1-k]];const r=[];r[ci]=nc;r[1-ci]=c[k];return r;}const y=x.slice();y[p[d]]=rec(x[p[d]],d+1);return y;};return rec(T,0);}
+function toNode(T,lens){const conv=x=>typeof x==='number'?{leaf:x,len:1}:{kids:[conv(x[0]),conv(x[1])],len:1,mask:mask(x)};const mask=x=>typeof x==='number'?bit(x):mask(x[0])|mask(x[1]);
+  if(typeof T==='number')return{kids:[{leaf:0,len:1},{leaf:T,len:1}]};return{kids:[{leaf:0,len:1},conv(T[0]),conv(T[1])]};}
+function fromSplits(list){/* list of {m,s} masks over 1..N-1 side (not containing 0) -> multifurcating node */
+  const sets=list.map(o=>{const m=(o.m&B1)?(ALL()^o.m):o.m;return{m,s:o.s};}).sort((a,b)=>pc(b.m)-pc(a.m));
+  const root={kids:[{leaf:0,len:1}],m:ALL()^B1,isRoot:true};for(let i=1;i<N;i++)root.kids.push({leaf:i,len:1});
+  for(const st of sets){const host=findHost(root,st.m);const inside=host.kids.filter(k=>((k.leaf!==undefined?bit(k.leaf):k.m)&st.m)!==0n);const node={kids:inside,m:st.m,len:1,sup:st.s};host.kids=host.kids.filter(k=>!inside.includes(k));host.kids.push(node);}
+  return root;}
+function findHost(n,m){for(const k of n.kids){if(k.kids&&(k.m&m)===m&&k.m!==m)return findHost(k,m);}return n;}
+function pc(x){let k=0;while(x){x&=x-B1;k++;}return k;}
+
+/* ---------- drawing ---------- */
+function radial(el,root,opt={}){
+  const s=el.querySelector('svg')||el.appendChild(document.createElementNS('http://www.w3.org/2000/svg','svg'));
+  const W=el.clientWidth,H=el.clientHeight;if(!W||!H)return;
+  const cnt=n=>n.leaf!==undefined?1:n.kids.reduce((a,k)=>a+cnt(k),0);
+  const pts=[],lines=[],labs=[];
+  const place=(n,x,y,a0,a1)=>{const tot=cnt(n);let a=a0;for(const k of n.kids){const w=(a1-a0)*cnt(k)/tot;const mid=a+w/2;const L=opt.lengths?Math.max(k.len,0.002):1;const nx=x+L*Math.cos(mid),ny=y+L*Math.sin(mid);lines.push([x,y,nx,ny,k]);if(k.leaf!==undefined)labs.push([nx,ny,mid,k.leaf]);else place(k,nx,ny,a,a+w);a+=w;}};
+  place(root,0,0,-Math.PI/2,1.5*Math.PI);
+  const xs=lines.flatMap(l=>[l[0],l[2]]),ys=lines.flatMap(l=>[l[1],l[3]]);
+  const mx=Math.min(...xs),Mx=Math.max(...xs),my=Math.min(...ys),My=Math.max(...ys);
+  const padX=Math.min(110,W*.24),padY=30;const sc=Math.min((W-2*padX)/((Mx-mx)||1),(H-2*padY)/((My-my)||1));
+  const ox=W/2-sc*(mx+Mx)/2,oy=H/2-sc*(my+My)/2;const X=v=>ox+sc*v,Y=v=>oy+sc*v;
+  const ink='var(--ink)',hot='#ff7a1a';
+  let h='';for(const[x1,y1,x2,y2,k]of lines){const hl=opt.highlight&&k.mask&&opt.highlight.includes(canon(k.mask));h+=`<line x1="${X(x1)}" y1="${Y(y1)}" x2="${X(x2)}" y2="${Y(y2)}" stroke="${hl?hot:ink}" stroke-width="${hl?4:2.5}" stroke-linecap="round"/>`;
+    if(k.sup!==undefined&&N<=12)h+=`<text x="${(X(x1)+X(x2))/2}" y="${(Y(y1)+Y(y2))/2-6}" text-anchor="middle" style="font-weight:600">${Math.round(k.sup*100)}%</text>`;}
+  const fs=N>12?12:14,gap=fs+2;const L2=labs.map(([x,y,a,i])=>{const c=Math.cos(a),sn=Math.sin(a);return{px:X(x),py:Y(y),lx:X(x)+8*c,ly:Y(y)+8*sn+5,anc:N>12?(c>=0?'start':'end'):(c>0.25?'start':c<-0.25?'end':'middle'),i};});
+  for(const side of['start','end','middle']){const g=L2.filter(l=>l.anc===side).sort((p,q)=>p.ly-q.ly);for(let k=1;k<g.length;k++){if(g[k].ly-g[k-1].ly<gap&&Math.abs(g[k].lx-g[k-1].lx)<140)g[k].ly=g[k-1].ly+gap;}}
+  for(const l of L2){if(Math.abs(l.ly-(l.py+5))>gap)h+=`<line x1="${l.px}" y1="${l.py}" x2="${l.lx}" y2="${l.ly-4}" stroke="var(--mute)" stroke-width="1"/>`;h+=`<circle cx="${l.px}" cy="${l.py}" r="4" fill="${ink}"/><text x="${l.lx}" y="${l.ly}" text-anchor="${l.anc}" style="font-weight:600;font-size:${fs}px">${esc(S.langs[l.i])}</text>`;}
+  if(opt.lengths){const v=niceLen((Mx-mx)/4);h+=`<line x1="16" y1="${H-12}" x2="${16+v*sc}" y2="${H-12}" stroke="${ink}" stroke-width="2"/><text x="${20+v*sc}" y="${H-7}">${Math.round(v*100)} pts of difference</text>`;}
+  s.setAttribute('viewBox',`0 0 ${W} ${H}`);s.innerHTML=h;}
+
+function rootedFromT(T){const conv=x=>typeof x==='number'?{leaf:x,len:1}:{kids:[conv(x[0]),conv(x[1])],len:1};return typeof T==='number'?{kids:[{leaf:T,len:1}]}:conv(T);}
+function rerootAt0(root){/* node objects with len -> rooted tree whose root is leaf 0's neighbour; leaf 0 removed */
+  const adj=new Map();let id=0;const ids=new Map();const nid=n=>{if(!ids.has(n)){ids.set(n,id++);adj.set(n,[]);}return n;};
+  const walk=n=>{nid(n);for(const k of n.kids||[]){nid(k);adj.get(n).push([k,k.len||0]);adj.get(k).push([n,k.len||0]);walk(k);}};walk(root);
+  let leaf0=null;for(const n of adj.keys())if(n.leaf===0)leaf0=n;if(!leaf0)return root;
+  const [nb,l0]=adj.get(leaf0)[0];
+  const build=(n,from,len)=>{if(n.leaf!==undefined)return{leaf:n.leaf,len};const kids=adj.get(n).filter(([m])=>m!==from&&m!==leaf0).map(([m,l])=>build(m,n,l));return kids.length===1?{...kids[0],len:len+kids[0].len}:{kids,len,sup:n.sup};};
+  const r=build(nb,leaf0,0);r.rootLen=l0;return r;}
+function cladogram(el,root,opt={}){
+  const s=el.querySelector('svg')||el.appendChild(document.createElementNS('http://www.w3.org/2000/svg','svg'));
+  const W=el.clientWidth,H=el.clientHeight;if(!W||!H)return;
+  const order=[];const walk=n=>{if(n.leaf!==undefined)order.push(n);else n.kids.forEach(walk);};walk(root);
+  const fs=N>12?12:14;const lw=Math.min(150,W*.3),L=30+fs*0.62*S.langs[0].length,R=W-lw-8,T=16,B=H-(opt.lengths?34:16);
+  const ht=n=>n.leaf!==undefined?0:1+Math.max(...n.kids.map(ht));const dep=new Map();
+  const setd=(n,d)=>{dep.set(n,d);(n.kids||[]).forEach(k=>setd(k,opt.lengths?d+Math.max(k.len,0):d+1));};setd(root,0);
+  let maxD;if(opt.lengths)maxD=Math.max(...order.map(n=>dep.get(n)))||1;else{maxD=ht(root)||1;const fix=n=>{if(n.leaf!==undefined)dep.set(n,maxD);else n.kids.forEach(fix);};fix(root);}
+  const X=d=>L+(R-L)*d/maxD;const yi=new Map();order.forEach((n,i)=>yi.set(n,T+(B-T)*(order.length===1?.5:i/(order.length-1))));
+  let h='';const ink='var(--ink)';
+  const pos=n=>{if(n.leaf!==undefined)return yi.get(n);const ys=n.kids.map(pos);const y=(Math.min(...ys)+Math.max(...ys))/2;yi.set(n,y);const x=X(dep.get(n));
+    h+=`<line x1="${x}" y1="${Math.min(...ys)}" x2="${x}" y2="${Math.max(...ys)}" stroke="${ink}" stroke-width="2.5"/>`;
+    n.kids.forEach((k,i)=>{const xk=X(dep.get(k));h+=`<line x1="${x}" y1="${ys[i]}" x2="${xk}" y2="${ys[i]}" stroke="${ink}" stroke-width="2.5"/>`;if(k.sup!==undefined&&k.leaf===undefined)h+=`<text x="${(x+xk)/2}" y="${ys[i]-6}" text-anchor="middle" style="font-weight:600;font-size:${fs}px">${Math.round(k.sup*100)}%</text>`;});return y;};
+  const ry=pos(root);h+=`<line x1="${L-22}" y1="${ry}" x2="${X(0)}" y2="${ry}" stroke="${ink}" stroke-width="2.5"/><text x="${L-26}" y="${ry+5}" text-anchor="end" style="font-weight:600;font-size:${fs}px">${esc(S.langs[0])}</text>`;
+  for(const n of order)h+=`<circle cx="${X(dep.get(n))}" cy="${yi.get(n)}" r="3.5" fill="${ink}"/><text x="${X(dep.get(n))+8}" y="${yi.get(n)+5}" style="font-weight:600;font-size:${fs}px">${esc(S.langs[n.leaf])}</text>`;
+  if(opt.lengths){const v=niceLen(maxD/4);h+=`<line x1="${L}" y1="${H-12}" x2="${L+v*(R-L)/maxD}" y2="${H-12}" stroke="${ink}" stroke-width="2"/><text x="${L+v*(R-L)/maxD+6}" y="${H-7}">${Math.round(v*100)} pts of difference</text>`;}
+  s.setAttribute('viewBox',`0 0 ${W} ${H}`);s.innerHTML=h;}
+function drawTree(el,T){if(ROOTED)cladogram(el,rootedFromT(T));else radial(el,toNode(T),{});}
+/* NeighborNet: circular ordering (Bryant & Moulton 2004, as described by Levy & Pachter 2011),
+   non-negative least-squares split weights, and outline drawing coordinates. */
+function nnOrder(D){
+  const n=D.length;
+  if(n<=3)return [...Array(n).keys()];
+  // working distance matrix over node ids (grows as reductions add nodes)
+  const d=[];for(let i=0;i<n;i++){d[i]=D[i].slice();}
+  let next=n;
+  const get=(a,b)=>a===b?0:d[a][b];
+  const set=(a,b,v)=>{d[a][b]=v;d[b][a]=v;};
+  let clusters=[...Array(n).keys()].map(i=>[i]); // each cluster: array of 1 or 2 node ids (ordered chain)
+  const reductions=[]; // [x,y,z,u,v]
+  const cdist=(A,B)=>{let s=0;for(const a of A)for(const b of B)s+=get(a,b);return s/(A.length*B.length);};
+  const reduce=(x,y,z)=>{
+    const u=next++,v=next++;d[u]=[];d[v]=[];
+    const active=clusters.flat().filter(a=>a!==x&&a!==y&&a!==z);
+    for(const a of active){set(u,a,(2/3)*get(x,a)+(1/3)*get(y,a));set(v,a,(1/3)*get(y,a)+(2/3)*get(z,a));}
+    set(u,v,(get(x,y)+get(y,z)+get(x,z))/3);d[u][u]=0;d[v][v]=0;
+    reductions.push([x,y,z,u,v]);return [u,v];};
+  while(clusters.flat().length>3){
+    const m=clusters.length;
+    // cluster-level choice
+    const R=clusters.map(A=>clusters.reduce((s,B)=>s+(A===B?0:cdist(A,B)),0));
+    let best=Infinity,bi=0,bj=1;
+    for(let i=0;i<m;i++)for(let j=i+1;j<m;j++){const q=(m-2)*cdist(clusters[i],clusters[j])-R[i]-R[j];if(q<best-1e-12){best=q;bi=i;bj=j;}}
+    const Ci=clusters[bi],Cj=clusters[bj];
+    // node-level choice within Ci x Cj
+    const others=clusters.filter((_,k)=>k!==bi&&k!==bj);
+    const mh=m+Ci.length+Cj.length-2;
+    const Rh=x=>others.reduce((s,C)=>s+cdist([x],C),0)+[...Ci,...Cj].reduce((s,z)=>s+(z===x?0:get(x,z)),0);
+    let bq=Infinity,bx=Ci[0],by=Cj[0];
+    for(const x of Ci)for(const y of Cj){const q=(mh-2)*get(x,y)-Rh(x)-Rh(y);if(q<bq-1e-12){bq=q;bx=x;by=y;}}
+    // build the chain: outer(Ci) - bx - by - outer(Cj)
+    const chain=[];if(Ci.length===2)chain.push(Ci[0]===bx?Ci[1]:Ci[0]);chain.push(bx,by);if(Cj.length===2)chain.push(Cj[0]===by?Cj[1]:Cj[0]);
+    clusters=others;
+    let ch=chain;
+    while(ch.length>2){const [u,v]=reduce(ch[0],ch[1],ch[2]);ch=[u,v,...ch.slice(3)];}
+    clusters.push(ch);
+  }
+  // remaining nodes (<=3) in circular order: clusters keep their internal adjacency
+  let ord=clusters.flat();
+  for(let k=reductions.length-1;k>=0;k--){
+    const [x,y,z,u,v]=reductions[k];const iu=ord.indexOf(u),iv=ord.indexOf(v);const L=ord.length;
+    if((iu+1)%L===iv){ord.splice(iu,1,x,y,z);ord.splice(ord.indexOf(v),1);}
+    else if((iv+1)%L===iu){ord.splice(iv,1,z,y,x);ord.splice(ord.indexOf(u),1);}
+    else{ord.splice(iu,1,x,y,z);ord.splice(ord.indexOf(v),1);} // should not happen
+  }
+  // rotate so taxon 0 is first
+  const r=ord.indexOf(0);return ord.slice(r).concat(ord.slice(0,r));
+}
+function nnWeights(D,ord){
+  /* circular splits = intervals [i..j] of positions 1..n-1; fit w>=0 to d(a,b)=sum of w over splits separating a,b */
+  const n=ord.length;const S=[];for(let i=1;i<n;i++)for(let j=i;j<n;j++)S.push([i,j]);
+  const P=[];for(let a=0;a<n;a++)for(let b=a+1;b<n;b++)P.push([a,b]);
+  const dv=P.map(([a,b])=>D[ord[a]][ord[b]]);
+  const cols=S.map(([i,j])=>{const c=[];P.forEach(([a,b],k)=>{const ia=a>=i&&a<=j,ib=b>=i&&b<=j;if(ia!==ib)c.push(k);});return c;});
+  const w=new Float64Array(S.length);const r=Float64Array.from(dv);
+  for(let it=0,mx=n>30?400:3000;it<mx;it++){let maxd=0;
+    for(let s=0;s<S.length;s++){const c=cols[s];if(!c.length)continue;let g=0;for(const k of c)g+=r[k];const nw=Math.max(0,w[s]+g/c.length);const dl=nw-w[s];if(dl!==0){for(const k of c)r[k]-=dl;w[s]=nw;if(Math.abs(dl)>maxd)maxd=Math.abs(dl);}}
+    if(maxd<1e-8)break;}
+  let ss=0,sd=0;for(let k=0;k<P.length;k++){ss+=r[k]*r[k];sd+=dv[k]*dv[k];}
+  return {splits:S.map((s,k)=>({i:s[0],j:s[1],w:w[k]})),fit:sd?1-ss/sd:1};
+}
+function nnOutline(ord,splits,eps){
+  /* outline walk (as in SplitsTree 6): returns polygon points and leaf positions */
+  const n=ord.length;eps=eps??1e-6;const sp=splits.filter(s=>s.w>eps||s.i===s.j||(s.i===1&&s.j===n-1));
+  const ang=s=>Math.PI*(s.i+s.j)/n;
+  const open=new Map(),close=new Map();
+  for(const s of sp){(open.get(s.i)||open.set(s.i,[]).get(s.i)).push(s);(close.get(s.j)||close.set(s.j,[]).get(s.j)).push(s);}
+  let x=0,y=0;const pts=[[x,y]];const leaves={};leaves[ord[0]]=[0,0];
+  for(let k=1;k<n;k++){
+    for(const s of (open.get(k)||[]).sort((a,b)=>b.j-a.j)){x+=s.w*Math.cos(ang(s));y+=s.w*Math.sin(ang(s));pts.push([x,y]);if(s.i===s.j)leaves[ord[k]]=[x,y];}
+    for(const s of (close.get(k)||[]).sort((a,b)=>b.i-a.i)){x-=s.w*Math.cos(ang(s));y-=s.w*Math.sin(ang(s));pts.push([x,y]);}
+  }
+  return {pts,leaves};
+}
+
+
+function netDraw(el,net){
+  const s=el.querySelector('svg')||el.appendChild(document.createElementNS('http://www.w3.org/2000/svg','svg'));
+  const W=el.clientWidth,H=el.clientHeight;if(!W||!H)return;
+  const n=net.ord.length;const {pts,leaves}=nnOutline(net.ord,net.splits);
+  const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);const mx=Math.min(...xs),Mx=Math.max(...xs),my=Math.min(...ys),My=Math.max(...ys);
+  const padX=Math.min(110,W*.24),padY=30,bar=26;const sc=Math.min((W-2*padX)/((Mx-mx)||1),(H-2*padY-bar)/((My-my)||1));
+  const ox=W/2-sc*(mx+Mx)/2,oy=(H-bar)/2-sc*(my+My)/2;const X=v=>ox+sc*v,Y=v=>oy+sc*v;
+  let h=`<path d="${pts.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join('')}Z" style="fill:color-mix(in srgb,var(--sky) 16%,transparent);stroke:var(--ink);stroke-width:2;stroke-linejoin:round"/>`;
+  const fs=N>12?12:14,gap=fs+2;
+  const L2=net.ord.map((t,k)=>{const a=k===0?0:2*Math.PI*k/n;const c=Math.cos(a),sn=Math.sin(a);const [x,y]=leaves[t];return{px:X(x),py:Y(y),lx:X(x)+8*c,ly:Y(y)+8*sn+5,anc:c>=0?'start':'end',i:t};});
+  for(const side of['start','end']){const g=L2.filter(l=>l.anc===side).sort((p,q)=>p.ly-q.ly);for(let k=1;k<g.length;k++){if(g[k].ly-g[k-1].ly<gap&&Math.abs(g[k].lx-g[k-1].lx)<140)g[k].ly=g[k-1].ly+gap;}}
+  for(const l of L2){if(Math.abs(l.ly-(l.py+5))>gap)h+=`<line x1="${l.px}" y1="${l.py}" x2="${l.lx}" y2="${l.ly-4}" stroke="var(--mute)" stroke-width="1"/>`;h+=`<circle cx="${l.px}" cy="${l.py}" r="3.5" fill="var(--ink)"/><text x="${l.lx}" y="${l.ly}" text-anchor="${l.anc}" style="font-weight:600;font-size:${fs}px">${esc(S.langs[l.i])}</text>`;}
+  const v=niceLen((Mx-mx)/4);h+=`<line x1="16" y1="${H-12}" x2="${16+v*sc}" y2="${H-12}" stroke="var(--ink)" stroke-width="2"/><text x="${20+v*sc}" y="${H-7}">${Math.round(v*100)} pts of difference</text>`;
+  s.setAttribute('viewBox',`0 0 ${W} ${H}`);s.innerHTML=h;}
+function niceLen(x){const p=Math.pow(10,Math.floor(Math.log10(x)));const f=x/p;return(f<1.5?1:f<3.5?2:5)*p;}
+function dendro(el,root){
+  const s=el.querySelector('svg')||el.appendChild(document.createElementNS('http://www.w3.org/2000/svg','svg'));
+  const W=el.clientWidth,H=el.clientHeight;if(!W||!H)return;
+  const order=[];const walk=n=>{if(n.leaf!==undefined)order.push(n);else n.kids.forEach(walk);};walk(root);
+  const lw=Math.min(120,W*.28),L=14,R=W-lw-8,T=14,B=H-40;const maxH=Math.max(root.h,0.01);
+  const X=h=>R-(R-L)*h/maxH;const yi=new Map();order.forEach((n,i)=>yi.set(n,T+(B-T)*(order.length===1?.5:i/(order.length-1))));
+  const ink='var(--ink)',mute='var(--mute)';let h='';
+  const pos=n=>{if(n.leaf!==undefined)return yi.get(n);const ys=n.kids.map(pos);const y=(Math.min(...ys)+Math.max(...ys))/2;yi.set(n,y);
+    h+=`<line x1="${X(n.h)}" y1="${Math.min(...ys)}" x2="${X(n.h)}" y2="${Math.max(...ys)}" stroke="${ink}" stroke-width="2.5"/>`;
+    n.kids.forEach((k,i)=>{h+=`<line x1="${X(n.h)}" y1="${ys[i]}" x2="${X(k.leaf!==undefined?0:k.h)}" y2="${ys[i]}" stroke="${ink}" stroke-width="2.5"/>`;});return y;};
+  pos(root);
+  for(const n of order)h+=`<text x="${R+8}" y="${yi.get(n)+5}" style="font-weight:600;font-size:${N>12?12:14}px">${esc(S.langs[n.leaf])}</text>`;
+  const top=1-2*maxH;const step=W<520?20:10;for(let p=100;p>=Math.max(0,top*100)-0.001;p-=step){const hh=(1-p/100)/2;const x=X(hh);h+=`<line x1="${x}" y1="${B+8}" x2="${x}" y2="${B+14}" stroke="${mute}"/><text x="${x}" y="${B+30}" text-anchor="middle" style="fill:${mute}">${Math.round(p)}%</text>`;}
+  h+=`<line x1="${L}" y1="${B+8}" x2="${R}" y2="${B+8}" stroke="${mute}"/>`;
+  s.setAttribute('viewBox',`0 0 ${W} ${H}`);s.innerHTML=h;}
+function traceDraw(){const el=$('trace');const s=el.querySelector('svg')||el.appendChild(document.createElementNS('http://www.w3.org/2000/svg','svg'));const W=el.clientWidth,H=el.clientHeight;if(!W||!H)return;
+  const t=M.trace;const mute='var(--mute)';if(t.length<2){s.innerHTML='';return;}
+  const lo=Math.min(...t),hi=Math.max(...t,lo+1);const L=36,R=W-8,T=10,B=H-22;const X=i=>L+(R-L)*i/(t.length-1),Y=v=>T+(B-T)*(v-lo)/(hi-lo);
+  let d='';t.forEach((v,i)=>{d+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);});
+  const bi=M.burnShown;let h='';if(bi>0&&bi<t.length)h+=`<rect x="${L}" y="${T}" width="${X(bi)-L}" height="${B-T}" fill="var(--hotsoft)"/><text x="${L}" y="${H-4}" style="fill:${mute}">burn-in shaded</text>`;
+  h+=`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="1.5"/><text x="${L-6}" y="${Y(lo)+5}" text-anchor="end">${lo}</text><text x="${L-6}" y="${Y(hi)+5}" text-anchor="end">${hi}</text><text x="${R}" y="${H-4}" text-anchor="end" style="fill:${mute}">step ${M.iter}</text>`;
+  s.setAttribute('viewBox',`0 0 ${W} ${H}`);s.innerHTML=h;}
+
+/* ---------- distance methods ---------- */
+function upgma(P){const ids=S.langs.map((_,i)=>i).filter(i=>!(ROOTED&&i===0));let cl=ids.map(i=>({leaf:i,size:1,h:0}));let D=ids.map(i=>ids.map(j=>1-P[i][j]));
+  while(cl.length>1){let bi=0,bj=1,b=Infinity;for(let i=0;i<cl.length;i++)for(let j=i+1;j<cl.length;j++)if(D[i][j]<b){b=D[i][j];bi=i;bj=j;}
+    const a=cl[bi],c=cl[bj];const n={kids:[a,c],size:a.size+c.size,h:b/2};const row=cl.map((_,k)=>(D[bi][k]*a.size+D[bj][k]*c.size)/(a.size+c.size));
+    const keep=cl.map((_,k)=>k).filter(k=>k!==bi&&k!==bj);D=keep.map(i=>keep.map(j=>D[i][j]).concat(row[i]));D.push(keep.map(i=>row[i]).concat(0));cl=keep.map(k=>cl[k]).concat(n);}
+  return cl[0];}
+function nj(P){let nodes=S.langs.map((_,i)=>({leaf:i,len:0}));let D=P.map(r=>r.map(v=>1-v));
+  while(nodes.length>3){const m=nodes.length;const r=D.map(x=>x.reduce((a,b)=>a+b,0));let b=Infinity,bi=0,bj=1;
+    for(let i=0;i<m;i++)for(let j=i+1;j<m;j++){const q=(m-2)*D[i][j]-r[i]-r[j];if(q<b){b=q;bi=i;bj=j;}}
+    const li=D[bi][bj]/2+(r[bi]-r[bj])/(2*(m-2));nodes[bi].len=Math.max(0,li);nodes[bj].len=Math.max(0,D[bi][bj]-li);
+    const n={kids:[nodes[bi],nodes[bj]],len:0};const row=D.map((_,k)=>(D[bi][k]+D[bj][k]-D[bi][bj])/2);
+    const keep=nodes.map((_,k)=>k).filter(k=>k!==bi&&k!==bj);D=keep.map(i=>keep.map(j=>D[i][j]).concat(row[i]));D.push(keep.map(i=>row[i]).concat(0));nodes=keep.map(k=>nodes[k]).concat(n);}
+  if(nodes.length===3){const[a,b,c]=[0,1,2];nodes[0].len=Math.max(0,(D[a][b]+D[a][c]-D[b][c])/2);nodes[1].len=Math.max(0,(D[a][b]+D[b][c]-D[a][c])/2);nodes[2].len=Math.max(0,(D[a][c]+D[b][c]-D[a][b])/2);}
+  return{kids:nodes};}
+
+/* ---------- parsimony ---------- */
+let PR={list:[],sel:0};
+function parsimony(){
+  if(N<4){$('pcount').textContent='Only one unrooted tree';$('rank').innerHTML='<p class="note">With three languages there is only one possible unrooted tree, so parsimony has nothing to choose between.</p>';PR.list=N===3?[{T:[1,2],score:fitch([1,2])}]:[];PR.sel=0;drawPars();return;}
+  if(N>8){$('pcount').textContent='Too many trees to list';$('rank').innerHTML='<p class="note">'+N+' languages give '+nTrees(N).toLocaleString()+' possible trees. Use the MCMC section to search instead.</p>';PR.list=[];drawPars();return;}
+  const ts=enumerate(N);PR.list=ts.map(T=>({T,score:fitch(T)})).sort((a,b)=>a.score-b.score);PR.sel=0;
+  $('pcount').textContent='Best of '+ts.length+' possible trees';
+  $('rank').innerHTML=PR.list.slice(0,10).map((t,i)=>`<button data-i="${i}" class="${i===0?'sel':''}"><b>${t.score}</b><span>${splits(t.T).map(groupName).map(esc).join(' · ')||'star'}</span></button>`).join('');
+  drawPars();}
+function nTrees(n){let x=1;for(let k=3;k<=2*n-5;k+=2)x*=k;return x;}
+$('rank').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;PR.sel=+b.dataset.i;[...$('rank').children].forEach(c=>c.classList.toggle('sel',c===b));drawPars();});
+function drawPars(){const el=$('ptree');const t=PR.list[PR.sel];if(!t){el.innerHTML='';$('pextra').innerHTML='';return;}
+  drawTree(el,t.T);$('ptitle').textContent='Tree '+(PR.sel+1)+': '+t.score+' changes';
+  const pcs=typeof t.T==='number'?[]:perChar(t.T).filter(c=>c.cost>c.min);
+  $('pextra').innerHTML=pcs.length?'<p style="margin-top:8px"><span class="flag">Extra changes needed:</span> '+pcs.map(c=>esc(c.m)+' (+'+(c.cost-c.min)+')').join(', ')+'</p>':'<p class="note" style="margin-top:8px">Every meaning fits this tree with the minimum number of changes.</p>';}
+
+/* ---------- MCMC ---------- */
+const M={T:null,score:0,iter:0,acc:0,prop:0,counts:new Map(),n:0,trace:[],running:false,burnShown:0};
+function mReset(){M.running=false;$('run').textContent='Run';if(N<4){M.T=null;$('log').textContent='MCMC needs at least four languages.';mDraw();return;}
+  M.T=randomTree();M.score=fitch(M.T);M.best=M.score;M.iter=0;M.acc=0;M.prop=0;M.counts=new Map();M.n=0;M.trace=[M.score];M.burnShown=+$('burn').value||0;
+  $('log').innerHTML='Started from a random tree. Press <b>Step once</b> or <b>Run</b>.';mDraw();}
+function mStep(verbose){const beta=+$('beta').value;const P=nni(M.T),ps=fitch(P),d=ps-M.score,a=d<=0?1:Math.exp(-beta*d),u=Math.random();M.prop++;const ok=u<a;
+  if(verbose)$('log').innerHTML=`Proposed a swap: ${M.score} → ${ps} changes (Δ = ${d>0?'+':''}${d}). Acceptance probability ${a>=1?'1 (not worse)':a.toFixed(3)}; random draw ${u.toFixed(3)}. <span class="${ok?'acc':'rej'}">${ok?'Accepted':'Rejected'}</span>.`;
+  if(ok){M.T=P;M.score=ps;M.acc++;if(ps<M.best)M.best=ps;}M.iter++;M.trace.push(M.score);if(M.trace.length>1500){M.trace=M.trace.filter((_,i)=>i%2===0);M.burnShown=Math.round(M.burnShown/2);}
+  if(M.iter>(+$('burn').value||0)){for(const s of splits(M.T)){const c=canon(s);M.counts.set(c,(M.counts.get(c)||0)+1);}M.n++;}}
+function mDraw(){$('sIter').textContent=M.iter.toLocaleString();$('sScore').textContent=M.T?M.score:'–';$('sAcc').textContent=M.prop?Math.round(100*M.acc/M.prop)+'%':'–';$('sSamp').textContent=M.n.toLocaleString();$('sBest').textContent=M.T?M.best:'–';
+  if(M.T){drawTree($('mtree'),M.T);}else $('mtree').innerHTML='';
+  traceDraw();
+  const arr=[...M.counts.entries()].map(([m,c])=>({m,s:c/M.n})).sort((a,b)=>b.s-a.s);
+  $('support').innerHTML=M.n?arr.slice(0,N>8?16:10).map(o=>`<div class="bar ${o.s>.5?'maj':''}"><span>${esc(groupName(o.m))}</span><i><span style="width:${(o.s*100).toFixed(1)}%"></span></i><em>${Math.round(o.s*100)}%</em></div>`).join(''):'<p class="note">Run the chain past burn-in to collect samples.</p>';
+  const maj=arr.filter(o=>o.s>.5);if(M.n&&N>=4){const c=fromSplits(maj);if(ROOTED){c.kids=c.kids.filter(k=>k.leaf!==0);cladogram($('cons'),c);}else radial($('cons'),c,{});}else $('cons').innerHTML='';}
+function loop(){if(!M.running)return;const k=+$('speed').value;for(let i=0;i<k;i++)mStep(false);mDraw();requestAnimationFrame(loop);}
+$('run').onclick=()=>{if(!M.T)return;M.running=!M.running;$('run').textContent=M.running?'Pause':'Run';if(M.running){$('log').textContent='Running…';requestAnimationFrame(loop);}};
+$('step').onclick=()=>{if(!M.T)return;M.running=false;$('run').textContent='Run';mStep(true);mDraw();};
+$('reset').onclick=mReset;
+$('beta').oninput=()=>$('betaV').textContent=(+$('beta').value).toFixed(1);
+$('speed').oninput=()=>$('speedV').textContent=$('speed').value;
+$('burn').onchange=()=>{M.burnShown=+$('burn').value||0;traceDraw();};
+$('betaV').textContent='1.0';$('speedV').textContent='20';
+
+/* ---------- distance render + orchestration ---------- */
+let DS={};
+function recompute(resetChain){buildChars();const P=shared();DS.P=P;
+  $('dist').innerHTML='<tr><th></th>'+S.langs.map(l=>'<th>'+esc(l)+'</th>').join('')+'</tr>'+P.map((r,i)=>'<tr><th class="m">'+esc(S.langs[i])+'</th>'+r.map((v,j)=>j>=i?'<td></td>':`<td style="background:color-mix(in srgb,var(--sky) ${Math.round(v*100)}%,transparent)">${Math.round(v*100)}</td>`).join('')+'</tr>').join('');
+  DS.u=upgma(P);DS.n=nj(P);{const D=P.map(r=>r.map(v=>1-v));const ord=nnOrder(D);const w=nnWeights(D,ord);DS.nn={ord,splits:w.splits,fit:w.fit};}drawDist();parsimony();if(resetChain)mReset();}
+function drawDist(){if(DS.u)dendro($('upgma'),DS.u);if(DS.n){if(ROOTED)cladogram($('nj'),rerootAt0(DS.n),{lengths:true});else radial($('nj'),DS.n,{lengths:true});}$('upnote').hidden=!ROOTED;if(DS.nn){netDraw($('nnet'),DS.nn);$('nnfit').textContent='The network accounts for '+(DS.nn.fit*100).toFixed(1)+'% of the variation in the distances (least-squares fit).';}$('njun').hidden=ROOTED;$('njro').hidden=!ROOTED;}
+const ro=new ResizeObserver(()=>{drawDist();drawPars();mDraw();});['upgma','nj','nnet','ptree','mtree','trace','cons'].forEach(id=>ro.observe($(id)));
+$('preset').innerHTML=Object.entries(PRESETS).map(([k,p])=>`<option value="${k}">${esc(p.label)}</option>`).join('');
+$('preset').onchange=()=>loadPreset($('preset').value);
+loadPreset('tavaric');
+/* open mid-use: a short warm run so the MCMC panel is not empty */
+for(let i=0;i<3000;i++)mStep(false);mDraw();$('log').innerHTML='The chain has already run 3,000 steps from a random start. Press <b>Reset</b> to start over, or <b>Step once</b> to watch single proposals.';
+}
+</script>
+</body>
+</html>
